@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Uwe Remer">
+<meta name="dcterms.date" content="2023-06-30">
+
+<title>Gewichtung in R - Gewichtung mit R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Gewichtung in R">
+<meta property="og:description" content="6-teilige Videoreihe zum Thema Gewichtung in R">
+<meta property="og:image" content="https://uweremer.github.io/gewichtung/Grafiken/gewichtung.png">
+<meta property="og:site-name" content="Gewichtung in R">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:title" content="Gewichtung in R">
+<meta name="twitter:description" content="6-teilige Videoreihe zum Thema Gewichtung in R">
+<meta name="twitter:image" content="https://uweremer.github.io/gewichtung/Grafiken/gewichtung.png">
+<meta name="twitter:creator" content="@uweremerbollow">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Gewichtung in R</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page">
+ <span class="menu-text">Startseite</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Skript</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-skript">    
+        <li>
+    <a class="dropdown-item" href="./gewichtung1.html">
+ <span class="dropdown-text">Teil 1 - Einstieg in die Gewichtung in R</span></a>
+  </li>  
+        <li class="dropdown-header">gewichtung2.qmd</li>
+        <li class="dropdown-header">gewichtung3.qmd</li>
+        <li class="dropdown-header">gewichtung4.qmd</li>
+        <li class="dropdown-header">gewichtung5.qmd</li>
+        <li class="dropdown-header">gewichtung6.qmd</li>
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./ressourcen.qmd">
+ <span class="menu-text">Ressourcen</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">
+ <span class="menu-text">Kontakt</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Gewichtung mit R</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        <div class="sidebar-tools-collapse tools-wide">
+    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="sidebar-tool px-1"><i class="bi bi-bank"></i></a>
+    <a href="https://github.com/uweremer/gewichtung" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://fediscience.org/@uweremer" title="" class="sidebar-tool px-1"><i class="bi bi-mastodon"></i></a>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">Teil 1 - Einstieg in die Gewichtung in R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  gewichtung2.qmd
+  </li>
+        <li class="sidebar-item">
+  gewichtung3.qmd
+  </li>
+        <li class="sidebar-item">
+  gewichtung4.qmd
+  </li>
+        <li class="sidebar-item">
+  gewichtung5.qmd
+  </li>
+        <li class="sidebar-item">
+  gewichtung6.qmd
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#gewichtung-in-r" id="toc-gewichtung-in-r" class="nav-link active" data-scroll-target="#gewichtung-in-r">Gewichtung in R</a>
+  <ul class="collapse">
+  <li><a href="#die-kurzfassung" id="toc-die-kurzfassung" class="nav-link" data-scroll-target="#die-kurzfassung">Die Kurzfassung</a></li>
+  <li><a href="#voraussetzungen" id="toc-voraussetzungen" class="nav-link" data-scroll-target="#voraussetzungen">Voraussetzungen</a></li>
+  <li><a href="#zielgruppe" id="toc-zielgruppe" class="nav-link" data-scroll-target="#zielgruppe">Zielgruppe</a></li>
+  <li><a href="#literatur-zum-einstieg" id="toc-literatur-zum-einstieg" class="nav-link" data-scroll-target="#literatur-zum-einstieg">Literatur zum Einstieg</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Gewichtung mit R</h1>
+<p class="subtitle lead">Grundlagen und Umsetzung</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor:in</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Uwe Remer </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="gewichtung-in-r" class="level1">
+<h1>Gewichtung in R</h1>
+<p>Dies ist das Skript zur <em>Videoserie Gewichtung in R</em>, die für die Stelle “Quantitative Methoden” der <a href="https://www.fernuni-hagen.de/">FernUni Hagen</a> entstanden ist.</p>
+<p>Diese Videoserie besteht aus sechs aufeinander aufbauenden Teilen:</p>
+<ul>
+<li>Teil 1: Was ist eine Mehrebenenregression? [ <a href="https://video.fernuni-hagen.de/Play/6076">Video (18 Min.)</a> ]</li>
+<li>Teil 2: Wann ist eine Mehrebenenregression angebracht? [ <a href="https://video.fernuni-hagen.de/Play/6077">Video (31 Min.)</a> ]</li>
+<li>Teil 3: Wie werden die Daten für eine Mehrebenregression vorbereitet? [ <a href="https://video.fernuni-hagen.de/Play/6078">Video (19 Min.)</a> ]</li>
+<li>Teil 4: Wie schätzt man eine Mehrebenenregression in R? [ <a href="https://video.fernuni-hagen.de/Play/6089">Video (23 Min.)</a> ]</li>
+<li>Teil 5: Wie schätzt man variierende Slopes und Cross-Level Interaktionen? [ <a href="https://video.fernuni-hagen.de/Play/6147">Video (27 Min.)</a> ]</li>
+<li>Teil 6: Wie lassen sich die Ergebnisse einer Mehrebenregression berichten? [<a href="https://video.fernuni-hagen.de/Play/6148">Video (18 Min.)</a> ]</li>
+</ul>
+<p>Zu allen Videos gibt es auf dieser Seite den R Code, sowie das Skript.</p>
+<section id="die-kurzfassung" class="level2">
+<h2 class="anchored" data-anchor-id="die-kurzfassung">Die Kurzfassung</h2>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="./Grafiken/varianten.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="voraussetzungen" class="level2">
+<h2 class="anchored" data-anchor-id="voraussetzungen">Voraussetzungen</h2>
+<p>Damit Sie den Inhalten folgen können, sollten Sie über Grundlagen in sozialwissenschaftlichen Methoden, insbesondere Stichprobenziehung und Umfragemethoden verfügen. Außerdem sollten Sie Vorkenntnisse zur linearen OLS Regression haben, sowie Grundlagen in R beherrschen.</p>
+</section>
+<section id="zielgruppe" class="level2">
+<h2 class="anchored" data-anchor-id="zielgruppe">Zielgruppe</h2>
+<p>BA oder MA Studierende aus Wirtschafts- und Sozialwissenschaften, Psychologie oder Digital Humanities, mit Vorkenntnissen in quantitativen Methoden (Grundlagen in R und in multivariater Statistik, z.B. OLS Regression).</p>
+</section>
+<section id="literatur-zum-einstieg" class="level2">
+<h2 class="anchored" data-anchor-id="literatur-zum-einstieg">Literatur zum Einstieg</h2>
+<ul>
+<li>Tausendpfund, Markus (2020): Mehrebenenanalyse. In: ebd. (Hrsg.): Fortgeschrittene Analyseverfahren in den Sozialwissenschaften. Grundwissen Politik. Springer VS, Wiesbaden. <a href="https://doi.org/10.1007/978-3-658-30237-5_5" class="uri">https://doi.org/10.1007/978-3-658-30237-5_5</a></li>
+<li>Pötschke, Manuela. (2020). Mehrebenenmodelle. In: Wagemann, Claudius; Goerres, Achim; Siewert, Markus B. (Hrsg.): Handbuch Methoden der Politikwissenschaft. Springer VS, Wiesbaden. <a href="https://doi.org/10.1007/978-3-658-16936-7_29" class="uri">https://doi.org/10.1007/978-3-658-16936-7_29</a></li>
+<li>Gellman, Andrew; Hill, Jennifer (2009): Data-Analysis Using regression and Multilevel/Hierachical Models. Cambridge: Cambridge University Press. Kap. 12 &amp; 13. <a href="https://doi.org/10.1017/CBO9780511790942" class="uri">https://doi.org/10.1017/CBO9780511790942</a></li>
+<li>Fox, John 2016: Applied Regression Analysis and Generalized Linear Models. Sage. Chp 23 Linear Mixed-Effects Models for Hierarchical and Longitudinal Data 700-742.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Kopiert");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopiert");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp(/^(?:http:|https:)\/\.github\.io\/uweremer/);
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2023, Uwe Remer</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="./datenschutz.html">Datenschutz</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./about.html">Impressum</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

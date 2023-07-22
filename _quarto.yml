@@ -1,0 +1,84 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "!Draft/"
+
+website: 
+  title: "Gewichtung in R"
+  description: "6-teilige Videoreihe zum Thema Gewichtung mit R"
+  #cookie-consent: true
+  twitter-card:
+    title: "Gewichtung in R"
+    description: "6-teilige Videoreihe zum Thema Gewichtung in R"
+    image: https://uweremer.github.io/gewichtung/Grafiken/gewichtung.png
+    creator: "@uweremerbollow"
+  open-graph:
+    title: "Gewichtung in R"
+    description: "6-teilige Videoreihe zum Thema Gewichtung in R"
+    image: https://uweremer.github.io/gewichtung/Grafiken/gewichtung.png
+    locale: de_DE
+    site-name: "Gewichtung in R"
+  navbar:
+    background: primary
+    left:
+      - text: "Startseite"
+        file: index.qmd
+      - text: "Skript"
+        menu:
+          - gewichtung1.qmd
+          - gewichtung2.qmd   
+          - gewichtung3.qmd
+          - gewichtung4.qmd   
+          - gewichtung5.qmd
+          - gewichtung6.qmd             
+      - text: "Ressourcen"
+        file: ressourcen.qmd  
+      - text: "Kontakt"
+        file: about.qmd          
+
+  sidebar:
+    style: "floating"
+    search: true
+    contents:
+      - gewichtung1.qmd
+      - gewichtung2.qmd
+      - gewichtung3.qmd
+      - gewichtung4.qmd   
+      - gewichtung5.qmd
+      - gewichtung6.qmd  
+    tools:
+      - icon: bank
+        href: https://www.sowi.uni-stuttgart.de/institut/team/Remer
+      - icon: github
+        href: https://github.com/uweremer/gewichtung
+      - icon: mastodon 
+        href: https://fediscience.org/@uweremer
+  page-footer: 
+    left: 
+      "&#169; 2023, Uwe Remer" 
+    right: 
+      - text: Datenschutz
+        file: datenschutz.qmd
+      - text: Impressum 
+        file: about.qmd
+  repo-url: https://github.com/uweremer/gewichtung
+  repo-branch: website
+
+
+
+format:
+  html:
+    lang: de-DE
+    theme: sandstone
+    css: styles.css
+    toc: true
+    link-external-newwindow: true
+    link-external-filter: ^(?:http:|https:)\/\.github\.io\/uweremer
+    author-meta: "Dr. Uwe Remer"
+    affiliation-title: "Universität Stutgart, CSS-Lab"
+    affiliation: "Universität Stutgart, CSS-Lab"
+
+editor: visual
+

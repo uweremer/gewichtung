@@ -1,0 +1,18 @@
+---
+title: "3. Gewichtung in prominenten Surveys"
+---
+
+```{r setup, include=FALSE}
+# Figure size in inches
+w = 5
+h = 2.5
+s = 2.8
+    
+knitr::opts_chunk$set(eval=TRUE, echo = FALSE, message = FALSE, warning = FALSE,
+                      fig.width=w, fig.height=h, fig.align='center')
+```
+
+
+Große Umfrageprogramme wie der [Allbus](https://www.gesis.org/allbus) oder der [European Social Survey (ESS)](https://www.europeansocialsurvey.org/) nutzen komplexe Stichprobendesigns, damit eine Befragung effizient möglich ist. 
+
+Wie wir bereits in Video 2 gehört haben, gibt es praktische und forschungsökonomische Gründe dafür, dass keine einfache Zufallsstichprobe gezogen werden kann.

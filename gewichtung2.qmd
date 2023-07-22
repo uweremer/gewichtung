@@ -1,0 +1,50 @@
+---
+title: "2. Was hat Gewichtung mit Stichproben zu tun?"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+# Figure size in inches
+w = 5
+h = 2.5
+s = 2.8
+    
+knitr::opts_chunk$set(eval=TRUE, echo = FALSE, message = FALSE, warning = FALSE,
+                      fig.width=w, fig.height=h, fig.align='center')
+```
+
+```{r import_allbus2021}
+library(foreign)
+allbus <- read.spss("./Daten/Allbus2021/ZA5280_v2-0-0.sav",
+                    to.data.frame = TRUE,
+                    use.value.labels = FALSE,
+                    reencode = TRUE)
+```
+
+```{r ttest_besipiel}
+allbus$Landesteil <- factor(allbus$eastwest,
+                             levels=c(1,2),
+                             labels=c("West","Ost"))
+allbus$demzufr <- abs(allbus$ps03-6)
+allbus <- na.omit(allbus[,c("demzufr", "landesteil")])
+
+library(ggplot2)
+library(ggpubr)
+ggplot(allbus, aes(x=Landesteil, y=demzufr, fill=Landesteil)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean") +
+  stat_compare_means(method = "t.test") +
+  scale_y_continuous("Demokratiezufriedenheit", 
+                     limits=c(0,5)) +
+  scale_x_discrete("Landesteil") +
+  theme_bw()
+
+effectsize::cohens_d(allbus$demzufr ~ allbus$Landesteil)
+table(allbus$Landesteil)
+res <- t.test(allbus$demzufr ~ allbus$Landesteil)
+mean_diff <- as.numeric(res$estimate[1] - res$estimate[2])
+mean_diff
+```
+
+
+Hallo `r effectsize::cohens_d(allbus$demzufr ~ allbus$landesteil)$cohens_d` 
