@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Uwe Remer">
 
-<title>Gewichtung in R - 1. Einstieg in die Gewichtung in R</title>
+<title>Gewichtung in R - 4. Wie nutzen wir einfache Gewichte in R? Das sjmisc und das weights Paket</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,8 +18,42 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -60,6 +94,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Gewichtung in R">
@@ -85,64 +121,71 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Gewichtung in R</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Startseite</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Skript</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-skript">    
         <li>
-    <a class="dropdown-item" href="./gewichtung1.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung1.html" rel="" target="">
+ <span class="dropdown-text">1. Was ist Gewichtung?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung2.html">
- <span class="dropdown-text">2. Was hat Gewichtung mit Stichproben zu tun?</span></a>
+    <a class="dropdown-item" href="./gewichtung2.html" rel="" target="">
+ <span class="dropdown-text">2. Warum müssen wir gewichten?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung3.html">
- <span class="dropdown-text">3. Gewichtung in prominenten Surveys</span></a>
+    <a class="dropdown-item" href="./gewichtung3.html" rel="" target="">
+ <span class="dropdown-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung4.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung4.html" rel="" target="">
+ <span class="dropdown-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung5.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung5.html" rel="" target="">
+ <span class="dropdown-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung6.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung6.html" rel="" target="">
+ <span class="dropdown-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./ressourcen.qmd">
+    <a class="nav-link" href="./ressourcen.qmd" rel="" target="">
  <span class="menu-text">Ressourcen</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">Kontakt</span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">1. Einstieg in die Gewichtung in R</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gewichtung4.html">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -150,62 +193,91 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-      <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Suchen"></div>
+        </div>
         </div>
         <div class="sidebar-tools-collapse tools-wide">
-    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="sidebar-tool px-1"><i class="bi bi-bank"></i></a>
-    <a href="https://github.com/uweremer/gewichtung" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="https://fediscience.org/@uweremer" title="" class="sidebar-tool px-1"><i class="bi bi-mastodon"></i></a>
+    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bank"></i></a>
+    <a href="https://github.com/uweremer/gewichtung" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://fediscience.org/@uweremer" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-mastodon"></i></a>
 </div>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Was ist Gewichtung?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link">2. Was hat Gewichtung mit Stichproben zu tun?</a>
+  <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Warum müssen wir gewichten?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link">3. Gewichtung in prominenten Surveys</a>
+  <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link active">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#einstieg" id="toc-einstieg" class="nav-link active" data-scroll-target="#einstieg">Einstieg</a></li>
+  <li><a href="#daten-einlesen" id="toc-daten-einlesen" class="nav-link" data-scroll-target="#daten-einlesen">Daten einlesen</a></li>
+  <li><a href="#das-sjmisc-paket" id="toc-das-sjmisc-paket" class="nav-link" data-scroll-target="#das-sjmisc-paket">Das <code>sjmisc</code> Paket</a>
+  <ul class="collapse">
+  <li><a href="#tabellen" id="toc-tabellen" class="nav-link" data-scroll-target="#tabellen">Tabellen</a></li>
+  <li><a href="#deskriptive-maßzahlen" id="toc-deskriptive-maßzahlen" class="nav-link" data-scroll-target="#deskriptive-maßzahlen">Deskriptive Maßzahlen</a></li>
+  </ul></li>
+  <li><a href="#das-weights-paket" id="toc-das-weights-paket" class="nav-link" data-scroll-target="#das-weights-paket">Das <code>weights</code> Paket</a>
+  <ul class="collapse">
+  <li><a href="#tabellen-1" id="toc-tabellen-1" class="nav-link" data-scroll-target="#tabellen-1">Tabellen</a></li>
+  <li><a href="#bivariate-statistik" id="toc-bivariate-statistik" class="nav-link" data-scroll-target="#bivariate-statistik">Bivariate Statistik</a>
+  <ul class="collapse">
+  <li><a href="#chi2-test" id="toc-chi2-test" class="nav-link" data-scroll-target="#chi2-test"><span class="math inline">\(\chi^2\)</span> Test</a></li>
+  <li><a href="#korrelation" id="toc-korrelation" class="nav-link" data-scroll-target="#korrelation">Korrelation</a></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test">t-Test</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">1. Einstieg in die Gewichtung in R</h1>
+<h1 class="title">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</h1>
 </div>
 
 
@@ -220,8 +292,473 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="einstieg" class="level1">
+<h1>Einstieg</h1>
+<p>Hallo und herzlich willkommen zum vierten Teil der Videoserie zum Thema “Gewichtung mit R”. Nachdem wir in vorigen Teil drei gesehen haben, wo wir Informationen zur Gewichtung finden und vor allem, wie die konkreten Gewichtungsvariablen im Allbus und im ESS Datensatz aussehen, wollen wir jetzt die Gewichtung der Daten mit R umsetzen.</p>
+<p>Vielleicht aber noch folgendes vorweg: ich habe zwar keine systematisch gewonnen Erkenntnisse darüber, aber mein Eindruck ist, dass bei R Nutzerinnen und -nutzern das Thema der Gewichtung manchmal etwas verdrängt wird. Das liegt vielleicht auch daran, dass R im Vergleich zu anderen in den Sozialwissenschaften genutzten Statistikpaketen deutlich breiter, das heißt auch in anderen wissenschaftlichen Disziplinen genutzt wird. Umfragedaten und Auswertungen von Daten aus komplexen Strichproben sind bei vielen Anwendern gar nicht relevant. Auch Beispiele oder Tutorials beinhalten diesen Aspekt nicht, entweder weil es für die Daten nicht relevant ist, oder um die Beispiele einfach zu halten . Und schließlich ist R modular aufgebaut; Dass heißt es gibt unterschiedliche Pakete für unterschiedliche Zwecke, bei denen Gewichtung unter Umständen nicht relevant ist. Hinzu kommt, dass es in den meisten Basis Funktionen - den sogenannten base-R Funktionen, keine Möglichkeit gibt, Daten zu gewichten. Dafür muss man zusätzliche Pakete nutzen.</p>
+<p>Glücklicherweise gibt es verschiedene geeigneten Pakete, die teils das gleiche, teils unterschiedliches Funktionen für die Gewichtung von deskriptiver, bivariater und/oder multivariater Statistischer Verfahren ermöglichen. Diese sind neben wenigen base-R Funktionen:</p>
+<ul>
+<li>das <code>sjmisc</code> Paket</li>
+<li>das <code>weights</code> Paket</li>
+<li>und das <code>survey</code> Paket</li>
+</ul>
+<p>Das <code>survey</code> Paket ist dabei meine klare Empfehlung. Das schauen wir uns auch ausführlich in Teil fünf an, da es ein paar mehr Möglichkeiten bietet, als die anderen beiden Pakete. Für die einfache Gewichtung von deskriptiven Tabellen und Maßzahlen, sind die beiden ersten Pakete jedoch ausreichend.</p>
+<p>Lernziele dieses Videos sind, dass Sie wissen, wie man mit dem <code>sjmisc</code> Paket oder dem <code>weights</code> Paket Daten gewichtet und deskriptive und einfache bivariate Analysen durchführt.</p>
+<p>Wechseln wir also in R und schauen es uns genau an…</p>
+</section>
+<section id="daten-einlesen" class="level1">
+<h1>Daten einlesen</h1>
+<p>Bevor wir mit der Gewichtung von Daten loslegen, müssen wir zuerst unsere beiden Datensätze einlesen.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>allbus <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">"./Daten/Allbus2021/ZA5280_v2-0-0.sav"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">reencode =</span> <span class="cn">TRUE</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ess.i <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">"./Daten/ESS10/ESS10.sav"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">reencode =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ess.sc <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">"./Daten/ESS10/ESS10SC.sav"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">reencode =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Zusammenführen</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ess.i)[<span class="fu">names</span>(ess.i) <span class="sc">%in%</span> <span class="fu">names</span>(ess.sc)]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">rbind</span>(ess.sc[,vars], ess.i[,vars])</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ess <span class="ot">&lt;-</span> ess[<span class="sc">!</span>(ess<span class="sc">$</span>cntry <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"IL"</span>, <span class="st">"RS"</span>)),]</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="das-sjmisc-paket" class="level1">
+<h1>Das <code>sjmisc</code> Paket</h1>
+<p>Das <a href="https://strengejacke.github.io/sjmisc/"><code>sjmisc</code> Paket</a> ist nicht explizit für die Analyse von gewichteten Daten entwickelt worden. Es ist eine Art Schweizer Taschenmesser für die Datenvorbereitung. Sie können damit Recodieren, Dichotomisieren oder Variablen gruppieren usw. Aber - und das ist für uns wichtig - es gibt auch einige Funktionen, die gewichtete Analysen erlauben.</p>
+<p>Installieren wir also das <code>sjmisc</code> Paket und laden es aus der Bibliothek:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("sjmisc")</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjmisc)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="tabellen" class="level2">
+<h2 class="anchored" data-anchor-id="tabellen">Tabellen</h2>
+<p>Der erste Schritt in jeder Analyse ist es, sich die interessierenden Variablen so nah an ihrer Rohform wie möglich anzusehen. Dafür bieten sich bei Variablen mit diskreten, also wenigen, überschaubaren Merkmalsausprägungen Häufigkeitstabellen an. Das sind in der Regel ordinale oder kategoriale Merkmale.</p>
+<p>Für ordinale oder kategoriale Merkmale, wo deskriptive Kennzahlen nur wenig Information bieten, lassen sich Häufigkeitstabellen nutzen.</p>
+<p>Als Beispiel betrachten wir aus dem Allbus die Variable <code>pv01</code> zur Sonntagsfrage.</p>
+<blockquote class="blockquote">
+<p>Wenn am nächsten Sonntag Bundestagswahl wäre, welche Partei würden Sie dann mit Ihrer ZWEITSTIMME wählen?</p>
+</blockquote>
+Es liegen die folgenden Merkmalsausprägungen vor:
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CDU-CSU
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SPD
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FDP
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DIE GRUENEN
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DIE LINKE
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AFD
+</td>
+<td style="text-align:left;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANDERE PARTEI
+</td>
+<td style="text-align:left;">
+90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WUERDE NICHT WAEHLEN
+</td>
+<td style="text-align:left;">
+91
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Im <code>sjmisc</code> Paket lassen sich mit der Funktion <code>frq()</code> Häufigkeitstabellen erstellen. Die erste Zeile liefert die ungewichtete Häufigkeitstabelle.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ungewichtet</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(allbus<span class="sc">$</span>pv01)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x &lt;numeric&gt; 
+# total N=5342 valid N=4026 mean=13.92 sd=26.98
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    1 | 1043 | 19.52 |   25.91 |  25.91
+    2 |  595 | 11.14 |   14.78 |  40.69
+    3 |  475 |  8.89 |   11.80 |  52.48
+    4 |  944 | 17.67 |   23.45 |  75.93
+    6 |  305 |  5.71 |    7.58 |  83.51
+   42 |  275 |  5.15 |    6.83 |  90.34
+   90 |  163 |  3.05 |    4.05 |  94.39
+   91 |  226 |  4.23 |    5.61 | 100.00
+ &lt;NA&gt; | 1316 | 24.63 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>Aber wir in der Funktion <code>frq()</code> noch das Argument <code>weights</code> nutzen. Hier geben wir an, welche Gewichtungsvariable genutzt werden soll. Wenn die Anslysebene Personen ist und ganz Deutschland betrachtet werden soll, muss im Allbus 2021 die Gewichtungsvariable <code>wghtpew</code> genutzt werden.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gewichtet nach wghtpew</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">frq</span>(allbus<span class="sc">$</span>pv01,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">weights =</span> allbus<span class="sc">$</span>wghtpew)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>xw &lt;numeric&gt; 
+# total N=4031 valid N=4031 mean=12.93 sd=26.22
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    1 | 1073 | 26.62 |   26.62 |  26.62
+    2 |  605 | 15.01 |   15.01 |  41.63
+    3 |  487 | 12.08 |   12.08 |  53.71
+    4 | 1019 | 25.28 |   25.28 |  78.99
+    6 |  252 |  6.25 |    6.25 |  85.24
+   42 |  228 |  5.66 |    5.66 |  90.90
+   90 |  154 |  3.82 |    3.82 |  94.72
+   91 |  213 |  5.28 |    5.28 | 100.00
+ &lt;NA&gt; |    0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>Betrachten wir mal nicht die Spalte <em>Raw %</em>, da hier die fehlenden Werte in der oberen Tabelle dabei sind, unten aber nicht. Leider kann ich Ihnen auch nicht sagen, warum die Funktion das unterschiedlich ausgibt. Selbst wenn ich in der unteren Zeile explizit angebe <code>show.na=TRUE</code> tauchen diese nicht auf. Aber abgesehen davon sehen wir tatsächlich auch substantielle Unterschiede zwischen den beiden Tabellen. Der Anteil der Parteien verändert sich nämlich leicht. Währen in der ersten Tabelle die Werte verzerrt waren, da ostdeutsche Befragte durch das Oversampling überreprsentiert waren, ist diese Verzerrung in der zweiten Tabelle ausgeglichen. Parteien, die in Ostdeutschland stärker sind als in Westdeutschland zeigen in der zweiten Tabelle also geringere Anteile als in der ersten. Ebenso NichtwählerInnen und der Anteil der Nichenpartei-Wähler.</p>
+<p>Oft möchte man die Ergebnisse einer solchen Häufigkeitstabelle zum Beispiel für Grafiken mit <code>ggplot2</code> weiter nutzen. Wir können die Tabelle dafür als Objekt speichern. Mit der Funktion <code>str()</code> sehen wir, das das Objekt ein Listenobjekt ist, welches als erstes Element einen <code>dataframe</code> enthält.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gewichtet nach wghtpew</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tabelle <span class="ot">&lt;-</span> <span class="fu">frq</span>(allbus<span class="sc">$</span>pv01,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">weights =</span> allbus<span class="sc">$</span>wghtpew)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tabelle)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 1
+ $ :'data.frame':   9 obs. of  6 variables:
+  ..$ val      : num [1:9] 1 2 3 4 6 42 90 91 NA
+  ..$ label    : chr [1:9] "&lt;none&gt;" "&lt;none&gt;" "&lt;none&gt;" "&lt;none&gt;" ...
+  ..$ frq      : num [1:9] 1073 605 487 1019 252 ...
+  ..$ raw.prc  : num [1:9] 26.62 15.01 12.08 25.28 6.25 ...
+  ..$ valid.prc: num [1:9] 26.62 15.01 12.08 25.28 6.25 ...
+  ..$ cum.prc  : num [1:9] 26.6 41.6 53.7 79 85.2 ...
+  ..- attr(*, "label")= chr "xw"
+  ..- attr(*, "vartype")= chr "numeric"
+  ..- attr(*, "mean")= num 12.9
+  ..- attr(*, "sd")= num 26.2
+  ..- attr(*, "ci")='data.frame':   9 obs. of  2 variables:
+  .. ..$ lower: num [1:9] 1018 561 446 965 222 ...
+  .. ..$ upper: num [1:9] 1128 649 528 1073 282 ...
+  ..- attr(*, "relative.ci")='data.frame':  9 obs. of  2 variables:
+  .. ..$ lower: num [1:9] 0.253 0.139 0.111 0.239 0.055 ...
+  .. ..$ upper: num [1:9] 0.28 0.161 0.131 0.266 0.07 ...
+ - attr(*, "class")= chr [1:2] "sjmisc_frq" "list"
+ - attr(*, "print")= chr "txt"
+ - attr(*, "encoding")= chr "UTF-8"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tabelle[[<span class="dv">1</span>]]</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  val  label  frq raw.prc valid.prc cum.prc
+1   1 &lt;none&gt; 1073   26.62     26.62   26.62
+2   2 &lt;none&gt;  605   15.01     15.01   41.63
+3   3 &lt;none&gt;  487   12.08     12.08   53.71
+4   4 &lt;none&gt; 1019   25.28     25.28   78.99
+5   6 &lt;none&gt;  252    6.25      6.25   85.24
+6  42 &lt;none&gt;  228    5.66      5.66   90.90
+7  90 &lt;none&gt;  154    3.82      3.82   94.72
+8  91 &lt;none&gt;  213    5.28      5.28  100.00
+9  NA   &lt;NA&gt;    0    0.00        NA      NA</code></pre>
+</div>
+</div>
+<p>Diesen <code>dataframe</code> können wir direkt für <code>ggplot()</code> nutzen. Ich schließe noch die <code>NA</code>s aus, füge die Parteinamen hinzu und sortiere die Labels. Und schon kp</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tabelle_df <span class="ot">&lt;-</span> tabelle[[<span class="dv">1</span>]]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tabelle_df <span class="ot">&lt;-</span> tabelle_df[<span class="sc">-</span><span class="dv">9</span>,] <span class="co">#Zeile mit dem NA eintrag ausschließen</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>tabelle_df<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">names</span>(<span class="fu">attr</span>(allbus<span class="sc">$</span>pv01, <span class="st">"value.labels"</span>)))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>tabelle_df<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(tabelle_df<span class="sc">$</span>label)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>tabelle_df<span class="sc">$</span>label <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(tabelle_df<span class="sc">$</span>label, tabelle_df<span class="sc">$</span>valid.prc)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tabelle_df, <span class="fu">aes</span>(<span class="at">x=</span>label,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y=</span>valid.prc, </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label=</span>valid.prc,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill=</span>label)) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>() <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sonntagsfrage"</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Anteil Zweitstimmen in Prozent"</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Quelle: Allbus 2021, Daten gewichtet mit Ost-West Personengewicht (wghtpew)"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gewichtung4_files/figure-html/tabelle_to_ggplot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="deskriptive-maßzahlen" class="level2">
+<h2 class="anchored" data-anchor-id="deskriptive-maßzahlen">Deskriptive Maßzahlen</h2>
+<p>Für metrische Merkmale, insbesondere, wenn sie kontiuierlich sind oder viele Merkmalsausprägungen aufweisen, sind Tabellen häufig ungeeignet. Stattdessen beschreiben wir diese Skalen mit deskriptiven Maßzahlen wie Mittewert und Standardabweichung.</p>
+<p>Betrachten wir für dieses Beispiel die Frage nach der Religiösität im Allbus in Variable <code>rb07</code>.</p>
+<blockquote class="blockquote">
+<p>Würden Sie von sich sagen, dass Sie eher religiös oder eher nicht religiös sind? Wo würden Sie Ihre eigenen Ansichten auf dieser Skala einstufen? 1 ‘nicht religiös’ … 10 ‘religiös’</p>
+</blockquote>
+<p>Das <code>sjmisc</code>Paket bietet hier die Funktion <code>descr()</code> um eine Reihe relevanter deskriptive Maßzahlen auszugeben. Schauen wir zunächst auf die ungewichteten Zahlen:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">descr</span>(allbus<span class="sc">$</span>rb07)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+## Basic descriptive statistics
+
+ var    type label    n NA.prc mean   sd   se md trimmed    range iqr skew
+  dd numeric    dd 3555  33.45 4.04 3.05 0.05  3    3.72 9 (1-10)   6 0.56</code></pre>
+</div>
+</div>
+<p>Dann übergeben wir wieder die Gewichtungsvariable <code>wghtpew</code> als <code>weights</code> Argument. Ein kleiner Bug in der derzeitgen Version von <code>sjmisc</code> ist, dassfür die <code>descr()</code> Funktion, wenn ein Gewicht angegeben wird, die Angabe der Variablen mit dem $-Operator nicht funktioniert, wir müssen also zunächst den <code>dataframe</code> angeben und danach als zweites Argument, die Variable, um die es geht.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">descr</span>(allbus, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>      rb07,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">weights =</span> wghtpew) </span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+## Basic descriptive statistics
+
+  var    type label    n NA.prc mean   sd   se    range iqr skew
+ rb07 numeric  rb07 3569  33.45 4.29 3.05 0.05 9 (1-10)   6 0.56</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diese schreibweise funktioniert nicht:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># descr(allbus$rb07,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#      weights = allbus$wghtpew) </span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Allerdings kann man auch mit einer base-R Funktion einen gewichteten Mittelwert anfordern. Und zwar mit <code>weighted.mean()</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">weighted.mean</span>(allbus<span class="sc">$</span>rb07, allbus<span class="sc">$</span>wghtpew, <span class="at">na.rm=</span>T)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.291535</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="das-weights-paket" class="level1">
+<h1>Das <code>weights</code> Paket</h1>
+<p>Anders als das <code>sjmisc</code>Paket ist das <a href="https://cran.r-project.org/web/packages/weights/index.html"><code>weights</code> Paket</a> dezidiert dafür gedacht, einfache gewichtete Statistiken zu berechnen. Um das <code>weights</code> Paket nutzen zu können, müssen wir es zuerst installieren und aus der Bibliothek laden:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("weights")</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(weights)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="tabellen-1" class="level2">
+<h2 class="anchored" data-anchor-id="tabellen-1">Tabellen</h2>
+<p>Auch mit dem <code>weights</code>Paket lassen sich einfache gewichtete Häufigkeitstabellen anfordern. Nutzen wir nun einmal den ESS als Beispiel. Ich lasse mir zunächst eine ungewichtete Häufigkeitstabelle für die Variable <code>cntry</code> ausgeben. Welchen Anteil machen die Beftragten eines Landes an allen Befragten aus.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(ess<span class="sc">$</span>cntry))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        AT         BE         BG         CH         CY         CZ         DE 
+0.03521944 0.02357927 0.04779153 0.02677943 0.01538543 0.04353636 0.15341469 
+        EE         ES         FI         FR         GB         GR         HR 
+0.02711352 0.04014278 0.02772894 0.03476227 0.02020326 0.04921578 0.02799269 
+        HU         IE         IS         IT         LT         LV         ME 
+0.03251161 0.03112252 0.01587776 0.04642003 0.02917077 0.01798776 0.02247151 
+        MK         NL         NO         PL         PT         SE         SI 
+0.02512660 0.02584752 0.02481010 0.03630961 0.03231819 0.04021311 0.02201435 
+        SK 
+0.02493318 </code></pre>
+</div>
+</div>
+<p>Und dann gewichtet nach der Gewichtungsvariable <code>anweight</code>. Sie soll sicherstellen, dass wenn alle Länder gemeinsam betrachtet werden, die Anzahl der Befragten pro Land zueinander im Richtigen Verhältnis relativ zur jeweiligen Bevölkerungsgröße stehen.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wpct</span>(ess<span class="sc">$</span>cntry,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">weight=</span>ess<span class="sc">$</span>anweight, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          AT           BE           BG           CH           CY           CZ 
+0.0178968211 0.0225358337 0.0138489091 0.0172341671 0.0017606303 0.0210208174 
+          DE           EE           ES           FI           FR           GB 
+0.1677474889 0.0026014901 0.0951090607 0.0109361452 0.1303559592 0.1289177883 
+          GR           HR           HU           IE           IS           IT 
+0.0214557887 0.0081009347 0.0194563221 0.0093750996 0.0007016343 0.1207596143 
+          LT           LV           ME           MK           NL           NO 
+0.0055543039 0.0037216784 0.0011925604 0.0040614691 0.0345517102 0.0104607004 
+          PL           PT           SE           SI           SK 
+0.0748502421 0.0208653919 0.0199898163 0.0041920846 0.0107455381 </code></pre>
+</div>
+</div>
+<p>Das können wir uns auch noch mal als Grafik anschauen:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cntry_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Land =</span> <span class="fu">rep</span>(<span class="fu">names</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(ess<span class="sc">$</span>cntry))),<span class="dv">2</span>),</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Anteil =</span> <span class="fu">c</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(ess<span class="sc">$</span>cntry)),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">wpct</span>(ess<span class="sc">$</span>cntry, <span class="at">weight=</span>ess<span class="sc">$</span>anweight,<span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Modell =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"ungewichtet"</span>, <span class="dv">29</span>),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">rep</span>(<span class="st">"gewichtet"</span>, <span class="dv">29</span>)))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cntry_df, <span class="fu">aes</span>(<span class="at">x=</span>Land, <span class="at">y=</span>Anteil, </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">group=</span>Modell, <span class="at">fill=</span>Modell)) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gewichtung4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Befragte bevölkerungsstarker Länder werden also hochgewichtet, Befragte kleinerer Länder bekommen ein kleineres Gewicht, damit im Aggregat, das Verhältnis der Anzahl Befragten unabhängig von der jewiligen Stichprobengröße zu den Bevölkerungsgrößenverhältnissen der Länder zueinander passt.</p>
+</section>
+<section id="bivariate-statistik" class="level2">
+<h2 class="anchored" data-anchor-id="bivariate-statistik">Bivariate Statistik</h2>
+<p>Neben der Funktion für Häufigkeiten, hat das <code>weights</code> Paket auch drei Funktionen für bivariate Statistik:</p>
+<ul>
+<li><span class="math inline">\(\chi^2\)</span> Test</li>
+<li>Pearsons Korrelation</li>
+<li>t-Test</li>
+</ul>
+<section id="chi2-test" class="level3">
+<h3 class="anchored" data-anchor-id="chi2-test"><span class="math inline">\(\chi^2\)</span> Test</h3>
+<p>Testet die Nullhypothese, dass in der Kontingenztabelle kein Zusammenhang zwischen den beiden Merkmalen vorliegt. Hier: der Zusammenhang zwischen Bildung und Ländern.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wtd.chi.sq</span>(ess<span class="sc">$</span>edulvlb, ess<span class="sc">$</span>cntry,  </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">weight=</span>ess<span class="sc">$</span>anweight, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Chisq       df  p.value 
+62964.89   756.00     0.00 </code></pre>
+</div>
+</div>
+<p>Es besteht also ein statistischer Zusammenhang zwischen der Verteilung der Bildungsabschlüsse und den Ländern.</p>
+</section>
+<section id="korrelation" class="level3">
+<h3 class="anchored" data-anchor-id="korrelation">Korrelation</h3>
+<p>Auch Korrelationen lassen sich gewichtet berechnen. Im Beispiel nutzen wir noch einmal Variablen aus dem Allbus: die Religiösität und das Alter der Befragten. Zuerst die base-R Funktion, ohen Gewichtung. Dann die Funktion <code>wtd.cor()</code> aus dem <code>weights</code> Paket:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(allbus<span class="sc">$</span>rb07, allbus<span class="sc">$</span>age)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  allbus$rb07 and allbus$age
+t = 7.5889, df = 3528, p-value = 4.103e-14
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.09413935 0.15906152
+sample estimates:
+      cor 
+0.1267362 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wtd.cor</span>(allbus<span class="sc">$</span>rb07, allbus<span class="sc">$</span>age,  </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">weight=</span>allbus<span class="sc">$</span>wghtpew)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  correlation    std.err  t.value      p.value
+Y   0.1579195 0.01662462 9.499133 3.779573e-21</code></pre>
+</div>
+</div>
+<p>Wie wir sehen, erhalten wir eine etwas höhere Korrelation in den gewichteten Daten. Das lässt sich damit erklären, dass in den ungewichteten Daten ostdeutsche Befragte überrepräsentiert sind, bei denen der Zusammenhang aufgrund der DDR-Sozialisation geringer ausfällt.</p>
+</section>
+<section id="t-test" class="level3">
+<h3 class="anchored" data-anchor-id="t-test">t-Test</h3>
+<p>Schließlich gibt auch eine Funktion für einen gewichteten t-Test: <code>wtd.t.test()</code></p>
+<p>Als Beispiel nutze ich aus dem Allbus die Variable <code>hs04</code>:</p>
+<blockquote class="blockquote">
+<p>Wie häufig kam es in den letzten vier Wochen vor, dass Sie sich gehetzt oder unter Zeitdruck fühlten? 1 ‘immer’ 5 ‘nie’</p>
+</blockquote>
+<p>Um einen t-Test für unabhängige Stichproben zu machen, muss ich noch die Gruppierungsvariable angeben. Hier die Variable <code>dh16</code>, ob Kinder im eigen Haushalt leben: 0 bedeutet Keine Kinder im HH, nicht-0, dass Kinder im HH leben.</p>
+<p>Betrachten wir zuerst den ungewichteten und danach den gewichteten t-Test:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># t-test für ungabhängige Stichproben</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable allbus$dh16 Kinder im eigenen Haushalt: </span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 0: Keine Kinder im HH,  nicht-0: Kinder im HH</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(allbus<span class="sc">$</span>hs04[allbus<span class="sc">$</span>dh16<span class="sc">!=</span><span class="dv">0</span>],</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>       allbus<span class="sc">$</span>hs04[allbus<span class="sc">$</span>dh16<span class="sc">==</span><span class="dv">0</span>])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  allbus$hs04[allbus$dh16 != 0] and allbus$hs04[allbus$dh16 == 0]
+t = -13.783, df = 1851.8, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.5957398 -0.4473176
+sample estimates:
+mean of x mean of y 
+ 2.657205  3.178734 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wtd.t.test</span>(allbus<span class="sc">$</span>hs04[allbus<span class="sc">$</span>dh16<span class="sc">!=</span><span class="dv">0</span>], </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>           allbus<span class="sc">$</span>hs04[allbus<span class="sc">$</span>dh16<span class="sc">==</span><span class="dv">0</span>],  </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">weight=</span>allbus<span class="sc">$</span>wghtpew[allbus<span class="sc">$</span>dh16<span class="sc">!=</span><span class="dv">0</span>],</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">weighty=</span>allbus<span class="sc">$</span>wghtpew[allbus<span class="sc">$</span>dh16<span class="sc">==</span><span class="dv">0</span>])</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$test
+[1] "Two Sample Weighted T-Test (Welch)"
+
+$coefficients
+   t.value         df    p.value 
+ -12.50611 1825.60383    0.00000 
+
+$additional
+ Difference      Mean.x      Mean.y    Std. Err 
+-0.47404233  2.66777020  3.14181253  0.03790485 </code></pre>
+</div>
+</div>
+<p>Wir sehen, es werden jeweils leicht unterschiedliche Mittelwerte berechnet. Der Unterschied ist aber gemessen an den Standardfehlern so groß, dass in beiden Formen des t-Tests die Nullhypothese mit sehr geringer Irrtumswahrscheinlichkeit zurückgewiesen werden kann.</p>
+<p>Bei anderen Beispielen und vor allem bei geringerer Fallzahl kann es jedoch durchaus sein, dass sich die Signifikanz der Ergebnisse zwischen gewichteten und ungewichteten statistischen Tests unterscheiden.</p>
+<p>Dazu werden wir auch im nächsten Video ein Beispiel mit dem <code>survey</code> Paket sehen.</p>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -251,9 +788,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -318,6 +869,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -356,12 +993,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp(/^(?:http:|https:)\/\.github\.io\/uweremer/);
+      var filterRegex = new RegExp("^(?:http:|https:)\/\.github\.io\/uweremer");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -375,6 +1012,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">© 2023, Uwe Remer</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">

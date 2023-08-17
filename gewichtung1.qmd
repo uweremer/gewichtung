@@ -1,5 +1,5 @@
 ---
-title: "1. Einstieg in die Gewichtung in R"
+title: "1. Was ist Gewichtung?"
 ---
 
 ```{r setup, include=FALSE}
@@ -12,4 +12,120 @@ knitr::opts_chunk$set(eval=TRUE, echo = FALSE, message = FALSE, warning = FALSE,
                       fig.width=w, fig.height=h, fig.align='center')
 ```
 
+Hallo und herzlich willkommen zur Videoserie "Gewichtung mit R".
 
+Vielleicht ist ihnen in wissenschaftlichen Arbeiten unter Tabellen oder Grafiken folgender Satz so, oder ähnlich schon aufgefallen: "*Daten gewichtet nach Designgewicht*"
+
+Vielleicht sind sie in den Codebüchern und Methodenberichten sozialwissenschaftlicher Datensätzen, wie dem [Allbus](https://www.gesis.org/allbus/allbus) oder dem [European Social Survey](https://www.europeansocialsurvey.org/), schon mal über Gewichtungsvariablen, wie `pweight` oder `dweight` gestolpert.
+
+Vielleicht haben sie aber auch einfach nur den Hinweis zu einer Auswertung bekommen, dass Sie ihre Daten gewichten müssen und sie fragen sich nun, wie das geht.
+
+In dieser Videoserie wollen wir klären, was es mit dieser Gewichtung auf sich hat, und wie man sie in R technisch umsetzt.
+
+## Zielgruppen und Voraussetzungen
+
+Zielgruppe dieser Videoserie sind Bachelor- oder Master-Studierende der Sozialwissenschaften, aber auch anderer Disziplinen, die mit Umfragedaten oder generell mit stichprobenbasierten Daten arbeiten. Darüber hinaus auch alle diejenigen, welche von anderen Statistikprogrammen zu R wechseln und Gewichten wollen oder müssen.
+
+Damit Sie den Inhalten folgen können, sollten Sie über Grundlagen in sozialwissenschaftlichen Methoden wie Datenerhebung und Stichprobenziehung verfügen. Außerdem sollten Sie Kenntnisse in Statistik haben, also wissen, was Mittelwerte und Streuungsmaße sind; und vielleicht schon wissen, was eine lineare Regression ist. Darüber hinaus werden Grundlagen in R vorausgesetzt, dass heißt, sie sollten wissen, wie Datensätze aufgebaut sind, wie sie Datensätze importieren und wie sie mit Daten, Variablen und Objekten arbeiten.
+
+Zum Einstieg in das Thema Gewichtung ist es sinnvoll, einen der am Ende des Videos angegebenen Grundlagetexte zu lesen.
+
+## Lernziele und Ablauf
+
+Diese Videoserie besteht aus sechs aufeinander aufbauenden Teilen. Die Überschriften beinhalten auch gleich das Lernziel des jeweiligen Videos. Am Ende sollen Sie Antworten auf die folgenden Fragen geben können:
+
+-   Teil 1: Was ist Gewichtung?
+-   Teil 2: Warum gewichten wir?
+-   Teil 3: Wo finden wir Gewichte in bekannten Surveys?
+-   Teil 4: Wie nutzen wir einfache Gewichte R? Das `sjmisc` und `weights` Paket
+-   Teil 5: Wie nutzen wir einfache Gewichte in R? Das `survey` Paket
+-   Teil 6: Wie gewichten wir komplexe Stichproben in R?
+
+Zu allen Videos gibt es auf dieser Seite den R Code sowie das Skript. Am Ende der Videos gibt es Empfehlungen zu weiterführender Literatur.
+
+Starten wir nun inhaltlich. Die erste Frage, die wir klären wollen, lautet:
+
+# Was ist Gewichtung?
+
+Gewichtung ist notwendig, wenn die Datenerhebung auf komplexen Stichproben basiert, also keine einfache Zufallsstichprobe, sondern die Stichprobenziehung mehre Stufen oder Schichten umfasst, und somit zu ungleichen Auswahlwahrscheinlichkeiten führt.
+
+Gewichtung ist außerdem eine Möglichkeit um Verzerrungen aus Nonresponse zu verringern, also wenn ungleiche Teilnahmewahrscheinlichkeiten vorliegen.
+
+Das Grundprinzip der Gewichtung ist also, dass unterschiedliche Auswahlwahrscheinlichkeiten oder Teilnahmewahrscheinlichkeiten so ausgeglichen werden, dass statistische Kennzahlen davon nicht mehr oder zumindest nicht mehr so sehr beeinflusst werden.
+
+Ganz konkret ist Gewichtung ist der Vorgang, durch den die Beobachtungen in Datensätzen mit einem unterschiedlich großen Gewichtungsfaktor in eine statistische Analyse mit aufgenommen werden. Unterschiedliche Beobachtungen haben dadurch einen unterschiedlich großen Einfluss auf das Ergebnis des statistischen Verfahrens.
+
+## Beispiel Schulklasse
+
+Machen wir ein einfaches Beispiel: Es ist jetzt nicht sonderlich sozialwissenschaftlich, dafür sehr intuitiv:
+
+Sie haben eine Schulklasse mit 10 Mädchen und 10 Jungen.
+
+![](./Grafiken/Folie1.PNG){fig-align="left"}
+
+Sie wollen das arithmetische Mittel der Körpergröße für die ganze Klasse berechnen. Am Tag der Messung sind aber nicht alle Kinder da, 5 der Jungen fehlen.
+
+![](./Grafiken/Folie2.PNG){fig-align="left"}
+
+Wie könnten Sie trotzdem zu einer guten Schätzung für die Durchschnittsgröße der ganzen Klasse gelangen?
+
+Richtig, bei der Berechnung des arithmetischen Mittels können wir jeden der gemessenen Jungen doppelt zählen. Wir gewichten sie also mit dem Faktor 2.
+
+![](./Grafiken/Folie3.PNG){fig-align="left"}
+
+```{r sim_data, eval=F}
+# Zufallsvariablen für Körpergröße erstellen (~15 Jahre)
+set.seed(10)
+jungen <- round(rnorm(10, 175, 3), 0)
+maedchen <- round(rnorm(10, 166, 3),0)
+
+sort(maedchen)
+
+# Zufallsauswahl wer anwesend war:
+anwesend <- sample(1:10, 5)
+# Nur anwesende Jungen
+jungen_anwesend <- jungen[anwesend]
+sort(jungen_anwesend)
+# Nur abwesende Jungen
+jungen_abwesend <- jungen[-anwesend]
+sort(jungen_abwesend)
+```
+
+```{r, eval=F}
+# Mittelwerte berechnen
+mittelwert_wahr <- mean(c(jungen, maedchen))
+mittelwert_ungewichtet <- mean(c(jungen_anwesend, maedchen))
+mittelwert_gewichtet <- mean(c(jungen_anwesend, jungen_anwesend, maedchen))
+
+# So viel Abweichung hat der ungewichtete geschätzte Mittelwert
+# vom wahren Mittelwert
+mittelwert_ungewichtet - mittelwert_wahr 
+
+# Und so viel der gewichtete geschätzte Mittelwert
+mittelwert_gewichtet - mittelwert_wahr 
+```
+
+Hier im Beispiel ist der wahre Mittelwert bei 170,15 cm. Auf Basis der *anwesenden* Schulkinder hätten wir eine Durchschnittsgröße von 169,2 cm geschätzt - also eine Abweichung von fast einem Zentimeter. Mit dem *gewichteten* Mittelwert kommen wir auf 170,35 cm. Das ist zwar leicht zu hoch, aber die Abweichung ist nur noch minimal.
+
+Das Beispiel hat intuitiv funktioniert, weil wir alle implizit die Annahme hatten, dass Körpergröße mit Geschlecht zusammenhängt. Außerdem war eine weitere implizite Annahme, dass die anwesenden Jungen repräsentativ für alle Jungen hinsichtlich der Größe sind.
+
+Hätten wir nicht gewichtet, hätten wir einen deutlich stärker verzerrten Wert für das arithmetische Mittel der Schulklasse geschätzt.
+
+Und ebenso ist es, wenn wir zum Beispiel auf Basis von Bevölkerungsumfragen Merkmale schätzen. Sobald ein Merkmal mit der Teilnahmewahrscheinlichkeit zusammenhängt, sind unsere Ergebnisse verzerrt. Aber unter bestimmten Bedingungen, kann eine Gewichtung der Daten die Verzerrung abmildern.
+
+Unterschiedliche Beobachtungen haben also durch Gewichtung einen unterschiedlich großen Einfluss auf das Ergebnis des statistischen Verfahrens.
+
+Wie schon gesagt, ist das Ausgleichen von Nonresponse ist nur ein Grund, warum Daten gewichtet werden müssen. Auch unterschiedliche Auswahlwahrscheinlichkeiten bei komplexen Stichproben können die Ergebnisse in dieser Form beeinflussen. Hier erhalten unterschiedliche Elemente der Grundgesamtheit bewusst unterschiedliche Wahrscheinlichkeiten, in die Stichprobe zu gelangen, Durch die Gewichtung werden dann diese Designeffekte der komplexen Stichproben ausgeglichen.
+
+In Teil zwei werden wir uns das genauer anschauen, wann und warum Gewichtung notwendig ist und welche was es mit den zwei Grundsätzlichen Arten der Gewichtung, den Designgewichten und den Anpassungsgewichten auf sich hat.
+
+Gewichte können theoretisch Werte von gegen 0 bis $+\infty$ annehmen. Ein Wert von 1 bedeutet, eine Beobachtung zählt einfach - also so viel, wie eine Beobachtung. Ein Gewicht von 2 bedeutet, diese Beobachtung zählt doppelt so viel wie eine Beobachtung. Und ein Wert von 0.5 heißt, diese Beobachtung wird nur mit halber Gewichtung in die Analyse einbezogen.
+
+Diese Gewichtungsfaktoren - oder einfach Gewichte - sind in der Regel als Variablen im Datensatz enthalten, in den sogenannten Gewichtungsvariablen. Welche das in bekannten sozialwissenschaftlichen Umfragen sind, wo wir sie finden und wie diese zu nutzen sind, darum wird es im dritten Teil gehen.
+
+In Teil vier werden wir dann Funktionen aus dem `weights` Paket und dem `sjmisc` Paket nutzen, mit denen deskriptive Analysen zunächst einfach gewichtet werden können. In Teil fünf werden wir dann das `survey` Paketes kennenlernen, das eine Vielzahl an Funktionen für die Auswertung gewichteter Daten enthält. Zuerst schauen wir uns in Grundlegende Funktionsweise an und in Teil 6 werden wir sehen, wie wir mit dem `survey` Paket Daten aus komplexen Stichproben für inferenzstatistische Verfahren gewichten.
+
+# Literatur
+
+-   Manderscheid, K., 2017. Sozialwissenschaftliche Datenanalyse mit R. Springer Fachmedien Wiesbaden, Wiesbaden. Kap. 11, S. 225-238. <https://doi.org/10.1007/978-3-658-15902-3>
+-   Gabler, S., Ganninger, M., 2010. Gewichtung, in: Wolf, C., Best, H. (Hrsg..), Handbuch der sozialwissenschaftlichen Datenanalyse. VS Verlag für Sozialwissenschaften, Wiesbaden, S. 143--164. <https://doi.org/10.1007/978-3-531-92038-2_7>

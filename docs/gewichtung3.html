@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Uwe Remer">
 
-<title>Gewichtung in R - 3. Gewichtung in prominenten Surveys</title>
+<title>Gewichtung in R - 3. Wo finden wir Gewichte in bekannten Surveys?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,7 +18,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -85,64 +85,71 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Gewichtung in R</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Startseite</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Skript</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-skript">    
         <li>
-    <a class="dropdown-item" href="./gewichtung1.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung1.html" rel="" target="">
+ <span class="dropdown-text">1. Was ist Gewichtung?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung2.html">
- <span class="dropdown-text">2. Was hat Gewichtung mit Stichproben zu tun?</span></a>
+    <a class="dropdown-item" href="./gewichtung2.html" rel="" target="">
+ <span class="dropdown-text">2. Warum müssen wir gewichten?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung3.html">
- <span class="dropdown-text">3. Gewichtung in prominenten Surveys</span></a>
+    <a class="dropdown-item" href="./gewichtung3.html" rel="" target="">
+ <span class="dropdown-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung4.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung4.html" rel="" target="">
+ <span class="dropdown-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung5.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung5.html" rel="" target="">
+ <span class="dropdown-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung6.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung6.html" rel="" target="">
+ <span class="dropdown-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./ressourcen.qmd">
+    <a class="nav-link" href="./ressourcen.html" rel="" target="">
  <span class="menu-text">Ressourcen</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">Kontakt</span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">3. Gewichtung in prominenten Surveys</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gewichtung3.html">3. Wo finden wir Gewichte in bekannten Surveys?</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -150,62 +157,84 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-      <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Suchen"></div>
+        </div>
         </div>
         <div class="sidebar-tools-collapse tools-wide">
-    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="sidebar-tool px-1"><i class="bi bi-bank"></i></a>
-    <a href="https://github.com/uweremer/gewichtung" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="https://fediscience.org/@uweremer" title="" class="sidebar-tool px-1"><i class="bi bi-mastodon"></i></a>
+    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bank"></i></a>
+    <a href="https://github.com/uweremer/gewichtung" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://fediscience.org/@uweremer" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-mastodon"></i></a>
 </div>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Was ist Gewichtung?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link">2. Was hat Gewichtung mit Stichproben zu tun?</a>
+  <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Warum müssen wir gewichten?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link active">3. Gewichtung in prominenten Surveys</a>
+  <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#der-allbus" id="toc-der-allbus" class="nav-link active" data-scroll-target="#der-allbus">Der Allbus</a>
+  <ul class="collapse">
+  <li><a href="#daten-einlesen" id="toc-daten-einlesen" class="nav-link" data-scroll-target="#daten-einlesen">Daten einlesen</a></li>
+  <li><a href="#variablen-des-stichprobendesigns" id="toc-variablen-des-stichprobendesigns" class="nav-link" data-scroll-target="#variablen-des-stichprobendesigns">Variablen des Stichprobendesigns</a></li>
+  <li><a href="#gewichtungsvariablen" id="toc-gewichtungsvariablen" class="nav-link" data-scroll-target="#gewichtungsvariablen">Gewichtungsvariablen</a></li>
+  </ul></li>
+  <li><a href="#der-european-social-survey" id="toc-der-european-social-survey" class="nav-link" data-scroll-target="#der-european-social-survey">Der European Social Survey</a>
+  <ul class="collapse">
+  <li><a href="#daten-einlesen-1" id="toc-daten-einlesen-1" class="nav-link" data-scroll-target="#daten-einlesen-1">Daten einlesen</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">3. Gewichtung in prominenten Surveys</h1>
+<h1 class="title">3. Wo finden wir Gewichte in bekannten Surveys?</h1>
 </div>
 
 
@@ -220,10 +249,134 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Große Umfrageprogramme wie der <a href="https://www.gesis.org/allbus">Allbus</a> oder der <a href="https://www.europeansocialsurvey.org/">European Social Survey (ESS)</a> nutzen komplexe Stichprobendesigns, damit eine Befragung effizient möglich ist.</p>
-<p>Wie wir bereits in Video 2 gehört haben, gibt es praktische und forschungsökonomische Gründe dafür, dass keine einfache Zufallsstichprobe gezogen werden kann.</p>
+<p>Hallo und herzlich willkommen zum dritten Teil der Videoserie zum Thema “Gewichtung mit R”. Im vorigen Teil zwei haben wir darüber gesprochen, warum wir unsere Daten gewichten müssen.</p>
+<p>Wenn die Daten aus komplexen Stichproben stammen, sollten wir zwingend Designgewichte nutzen um ungleiche Auswahlwahrscheinlichkeiten auszugleichen. Zusätzlich kann man mit Hilfe von Anpassungsgewichten Verzerrungen durch Nonresponse unter bestimmten Voraussetzungen abmildern.</p>
+<p>Wie wir bereits in Video zwei gehört haben, gibt es praktische und forschungsökonomische Gründe dafür, dass keine einfache Zufallsstichprobe gezogen werden kann. Unter anderem kann man durch eine komplexe Stichprobe im Vergleich zu einer einfachen Zufallsstichprobe bei gleicher Fallzahl eine höhere Genauigkeit erreichen. Oder umgekehrt: bei einer definierten Qualität kann der Ressourceneinsatz durch eine komplexe Stichprobe reduziert werden.</p>
+<p>Wenig überraschen nutzen große Umfrageprogramme wie der <a href="https://www.gesis.org/allbus">Allbus</a> oder der <a href="https://www.europeansocialsurvey.org/">European Social Survey (ESS)</a> komplexe Stichprobendesigns, damit eine Befragung effizient möglich ist.</p>
+<p>In diesem Video wollen wir uns nun anschauen, wie wir die notwendigen Informationen finden, die notwendig sind, um das Stichprobendesign korrekt zu berücksichtigen und die Gewichtung korrekt durchzuführen. Dafür nehmen wir uns die jüngsten Runden eben jener beiden bekannten sozialwissenschaftliche Umfragen vor: den Allbus 2021 und den European Social Survey der Runde 10.</p>
+<p>Für beide Umfragen zeige ich Ihnen, wo sie die entsprechende Dokumentation finden, wo sie darin nach Informationen zu den Gewichten suchen und wo sie die Gewichte in den Datensätzen finden.</p>
+<p>Am Ende des Videos sollten Sie in der Lage sein, auch selbst für andere Datensätze nach den entsprechenden Informationen suchen zu können und die korrekten Gewichte für Ihre Analysen identifizieren zu können.</p>
+<p>Beginnen wir dem Allbus.</p>
+<section id="der-allbus" class="level1">
+<h1>Der Allbus</h1>
+<p>Allbus steht für „Allgemeine Bevölkerungs¬umfrage der Sozial¬wissenschaften” und ist ein institutionalisiertes Umfrageprogramm, welches am GESIS – Leibniz-Institut für Sozialwissenschaften e.V. angesiedelt ist.</p>
+<p>Seit 1980 werden in zweijährigem jeweils etwa 3.000 bis 3.500 Personen in persönlichen Interviews zu unterschiedlichen gesellschaftlichen und politischen Themen, sowie zur Soziodemographie befragt. Ein Teil der Fragen gehört zum Kernprogramm und ist somit auch als Zeitreihe auswertbar, andere Fragemodule wechseln. Insgesamt gibt es bisher 22 Runden. Die einzigen Abweichungen vom zweijährigen Rhythmus sind eine Umfrage 1991, die erstmals auch die Ostdeutsche Bevölkerung einbezogen hat, sowie der letzte Allbus 2021, der aufgrund der Corona-Pandemie erst mit einem Jahr Verspätung ins Feld ging. Mit über 5.300 Personen hat dieser Allbus auch untypisch viele Befragte, das liegt daran, dass coronabedingt erstmals zwei Erhebungsmodi parallel genutzt wurden, und zwar ein Online-Fragebogen und ein Selbstausfüller-Fragebogen.</p>
+<p>Zu allen Allbus Umfragen gibt es den Datensatz und die Dokumentation zu den Daten beim GESIS - Leibniz Institut für Sozialwissenschaften.</p>
+<p>Lassen sie uns mal gemeinsam schauen, was wir dort bekommen und dann insbesondere: wo es Informationen zur Gewichtung gibt…</p>
+<p>Ich rufe die Webseite des GESIS auf gesis.org. Unter „Angebot” finde ich die Unterseite zum Allbus. Bei „Inhalte und Suche” gibt es zu allen Jahrgängen das Studienprofil.</p>
+<p>Den Allbus 2021 finde ich hier oben.</p>
+<p>Habe ich mich also zur Detailseite des Allbus 2021 vorgearbeitet, erhalte ich hier den Datensatz zum Download, ein paar Randdaten: Erhebungszeitraum, das durchführende Umfrageinstitut, die Datensatzstruktur. Und hier unten eine thematisch gegliederte Übersicht über die Themen. Wollen Sie aber den genauen Fragewortlaut, dann können Sie hie oben auch den Fragebogen herunterladen.</p>
+<p>Weiter unten finden Sie noch Informationen zur Stichprobe und Grundgesamtheit – die Wohnbevölkerung über 18 Jahren. Die Stichprobe wird beschrieben als <em>zweistufige, disproportional geschichtete Zufallsauswahl</em>, in Westdeutschland (incl.&nbsp;West-Berlin) und Ostdeutschland (incl.&nbsp;Ost-Berlin).</p>
+<p>Das ist aber etwas ungenau. Denn: die zwei Stufen beziehen sich nicht auf die disproportionale Schichtung. Die disproportionale Schichtung nach Ost/West mit Oversampling für Ost kommt nämlich als allererstes. Erst danach, innerhalb der beiden Unterstichproben, man könnte auch sagen, innerhalb der unabhängigen Stichproben für Ost und West, kommt dann die zweistufige Zufallsauswahl:</p>
+<ul>
+<li>Stufe 1 ist dabei eine Zufallsauswahl an Gemeinden, diese dienen als sogenannte Primary Sampling Units oder Sample Points.</li>
+<li>Und auf Stufe 2 werden dann innerhalb dieser Gemeinden die Personen aus dem Einwohnermelderegister gesampelt. Wie sie sehen, liegt also sogar eine Klumpenstichprobe vor: Zuerst werden die Gemeinden als Cluster ausgewählt und dann, innerhalb der Cluster die eigentlichfen Befragten. Weiter unten sehen wir auch die Verteilung dieser Cluster auf die Landesteile.</li>
+</ul>
+<p>Weiter erfahren wir, dass die Gemeinden mit einer Wahrscheinlichkeit proportional zur Zahl ihrer erwachsenen Einwohner ausgewählt werden. Also: in dieser Stufe wird darauf geachtet, dass das Sampling einer Gemeinde nicht durch die Größe der Gemeinde für unterschiedliche Auswahlwahrscheinlichkeiten für die in ihr enthaltenen Personen sorgt.</p>
+<p>Deutlicher wird das, wenn man als Gedankenbeispiel die Auswahlwahrscheinlichkeiten der Gemeinden nicht um die Zahl der Einwohner korrigiert. Wir Beispielsweise eine Großstadt mit gleicher Wahrscheinlichkeit wie ein kleines Dorf gesampelt, hätten die Dorfbewohner ja insgesamt eine deutlich höhere Auswahlwahrscheinlichkeit als die Stadtbewohner.</p>
+<p>Was an dieser Stelle noch nicht erwähnt wird ist, dass auch diese erste Stufe der Auswahl der Gemeinden eine stratifizierte Stichprobe nutzt. Dabei werden das Bundesland, die Gemeindegrößenklasse und der Siedlungstyp über die BIK-Größenklassen als Schichtungsmerkmale herangezogen. Dieses Detail findet sich aber erst in der ausführlichen Dokumentation, die wir uns auch gleich noch anschauen. Dazu öffnen wir den Variablenreport, manchmal auch Codebuch genannt:</p>
+<p>Eigentlich enthält das Codebuch eine Dokumentation aller im Datensatz enthaltenen Variablen. Ich springe mal direkt dorthin, wo diese Variablendokumentation anfängt. Ich scrolle noch ein paar Seiten weiter zu den ersten inhaltlichen Fragen. Und hier sehen wir für alle Variablen den gleichen Aufbau: Hier oben der Variablenname, dort eine Kurzbeschreibung, der Fragewortlaut, die Antwortvorgaben, sowie die zugeordneten Merkmalsausprägungen. Außerdem gibt es Informationen zu den Missing Values, und am Ende eine Häufigkeitstabelle.</p>
+<p>Aber der Allbus Variablenreport bietet noch mehr. Und zwar am Anfang ein Studienbeschreibung mit einer Vorstellung der Themenblöcke und für uns am interessantesten in Kapitel 3 einen ganzen Abschnitt zur Gewichtung. Wenn Sie mit den Daten des Allbus arbeiten, sollten Sie sich diesen Abschnitt auch unbedingt einmal durchlesen. Das Wichtigste was ihr erfahren, fasse ich mal kurz zusammen:</p>
+<ol type="1">
+<li>Es gibt ein Oversampling für Ost – das ist uns ja schon bekannt. Und damit wissen wir ja bereits, dass es ein Designgewicht geben muss, dass dieses Oversampling ausgleicht.</li>
+<li>Während der Allbus seit dem Jahr 2000 Personenstichproben nutzt, wurde früher das ADM-Stichprobendesign genutzt, bei dem auf Stufe 2 zunächst Haushalte gesampelt wurden. Erst danach wurde innerhalb des Haushaltes eine Zufallsauswahl des eigentlichen Befragten vorgenommen. Wir haben ja bereits in Video 2 von Transformationsgewichten gehört. Nutzt man also alte Allbus-Datensätze nach dem ADM-Design, dann muss man ein Personen-Transformationsgewicht nutzen um Analysen auf Individualebene durchzuführen. Umgekehrt muss man bei den neueren Allbus-Runden ein Haushalts-Transformationsgewicht nutzen, möchte man die Personenstichprobe auch Ebene der Haushalte analysieren.</li>
+</ol>
+<p>Auf der nächsten Seite finden wir eine Übersicht über all diese Gewichtungsvariablen. Noch ein Hinweis: nicht jede Variable muss in jedem Datensatz enthalten sein, da ja das Personentransformationsgewicht nur für Daten aus Haushaltsstichproben benötigt wird, und das Haushaltstransformationsgewicht nur für Daten aus Personenstichproben.</p>
+<p>Beide Transformationsgewichte können aber mit dem Ost/West Designgewicht zusammen genutzt werden. Das heißt wir müssen zuerst wissen, auf welcher Analyseebene wir unsere Auswertungen vornehmen wollen. In aller Regel ist das die Individualebene.</p>
+<p>Und wir müssen wissen für welche Zielpopulation wir unsere Analyse durchführen wollen. Betrachten wir die Landesteile getrennt, dann müssen wir kein Designgewicht nutzen. Wollen wir Aussagen über die deutsche Bevölkerung als ganzes machen, müssen wir das Oversampling der Ostdeutschen Bevölkerung ausgleichen. Dafür gibt es die Gewichtungsvariable <code>wghtpew</code>.</p>
+<p>Darüber hinaus finden wir in Abschnitt 3.4 auch noch die ausführlichere Beschreibung des komplexen Stichprobendesigns, unter anderem mit der Information darüber, wo wir die Clustervariable mit den Primary Sampling Units finden, nämlich der xs11 und welche Schichtungsmerkmale bei der Auswahl der Gemeinden genutzt wurden: Land, Größenklasse und Siedlungstyp. Da alle diese Variablen im Datensatz enthalten sind, gibt es auch im Variablenteil des Variablenreports einen entsprechenden Eintrag…</p>
+<p>Aus der Dokumentation wissen wir also nun, welche Art von komplexen Stichprobendesign genutzt wurde und wie die Daten zu gewichten sind. Gehen wir jetzt in R und öffnen wir den Datensatz und sehen uns die entsprechenden Gewichtungsvariablen einmal an. Wir laden den Allbus.</p>
+<section id="daten-einlesen" class="level2">
+<h2 class="anchored" data-anchor-id="daten-einlesen">Daten einlesen</h2>
+<p>Dann rufen wir mit <code>names()</code> einmal alle Variabelnamen auf.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "xs11"     "xt01"     "xt02"     "xt03"     "xt04"     "xt05"    
+ [7] "xt06"     "xt12"     "xt13"     "xt14"     "xt07"     "xt08"    
+[13] "xt09"     "xt10"     "xt10c"    "xs15"     "xs16"     "land"    
+[19] "bik"      "gkpol"    "wghtpew"  "wghtht"   "wghthew"  "wghthtew"</code></pre>
+</div>
+</div>
+<p>Wir sehen hier ganz am Ende die entsprechenden Variablen. Hier die Variablen für das komplexe Stichprobendesign <code>xs11</code>, <code>land</code>, <code>gkpol</code>, und <code>bik</code>.</p>
+</section>
+<section id="variablen-des-stichprobendesigns" class="level2">
+<h2 class="anchored" data-anchor-id="variablen-des-stichprobendesigns">Variablen des Stichprobendesigns</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>  xs11 land bik gkpol
+1   22   80   3     3
+2   81   50   3     3
+3  121   10   4     3
+4  101  160   2     2
+5   59   50   7     3
+6  112   90   8     6</code></pre>
+</div>
+</div>
+</section>
+<section id="gewichtungsvariablen" class="level2">
+<h2 class="anchored" data-anchor-id="gewichtungsvariablen">Gewichtungsvariablen</h2>
+<p>Und hier die Variablen für die Gewichtung. In aller Regel ist es diese Variable die wir nutzen das Personenbezogene Ost-West Designgewicht: <code>wghtpew</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gewichtung3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wie wir die Gewichtung der Daten dann technisch in R umsetzten, sehen wir Teil vier. Zuvor schauen wir uns aber noch im Folgenden das zweite Beispiel an, den European Social Survey.</p>
+</section>
+</section>
+<section id="der-european-social-survey" class="level1">
+<h1>Der European Social Survey</h1>
+<p>Der European Social Survey oder kurz ESS ist ebenfalls ein institutionalisiertes Umfrageprogramm. Wie der Name schon andeutet, ist es ein länderübergreifendes Umfrageprogramm in Europa. 24 Länder gehören zum Kernkonsortium und insgesamt 38 haben bisher an mindestens einer ESS-Runde teilgenommen, neben europäischen Kernländern auch Länder wie Nord-Mazedonien, Israel oder Russland.</p>
+<p>Wie der Allbus wird auch der ESS in zweijährigem Rhythmus durchgeführt. Seit 2002 in mittlerweile 10 Runden. Pro Land wird eine Mindeststichprobengröße von 1.500 Befragten angestrebt, bei kleinen Ländern mit weniger als 2 Mio. Einwohnern mindestens 800. Auch beim ESS sind die Daten und die Dokumentation über den Internetauftritt frei verfügbar.</p>
+<p>Lassen Sie uns gemeinsam schauen, wo wir die Informationen zur Gewichtung erhalten.</p>
+<p>Ich rufe die Seite https://www.europeansocialsurvey.org/ auf.</p>
+<p>Hier finden Sie allgemeine Informationen, unter anderem, welche Länder in welcher Runde des ESS teilgenommen haben. Eine für uns interessante Information finden Sie hier bei Methodolgy. Und dann ESS Methodology unter Sampling. Hier erfahren wir, welche Vorgaben die einzelnen Länder für das Stichprobendesign erhalten.</p>
+<p>Innerhalb dieser vorgaben können die Länder aber selbst entscheiden, auf welche Weise sie ihre Stichprobe ziehen. Es können Personenstichproben, Haushaltstichproben oder Adressstichproben genutzt werden. Somit können ganz unterschiedliche Stichprobendesigns Anwendung finden. Es muss jedoch auf jeder Stufe eine Zufallsstichprobe genutzt werden, also Mehrstufige Designs sind möglich, und Quotenstichproben dürfen auf keinen Fall genutzt werden.</p>
+<p>Hier gibt es auch einen ein Link zu einem sehr ausführlichen Dokument, den Sampling Guidelines für Runde 10. Dort kann man sehr genau nachlesen, nach welchen Empfehlungen für das Stichprobendesgin gegeben werden. Wer sich mehr dafür interessiert, findet hier ein interessantes Dokument.</p>
+<p>Außerdem gibt es hier unten noch Mal den Hinweis, dass das Stichprobendesign die Schätzung der Varianzen beeinflusst und daher bei der Analyse berücksichtigt werden sollte. Darüber sprechen wir in Video 6.</p>
+<p>Als nächstes gehen wir unter „Data and Documentation” auf das Daten Portal. Hier erhalten wir für alle ESS Runden die Daten und die Dokumention als Download.</p>
+<p>Schauen wir uns die Runde 10 an.</p>
+<p>Sie sehen hier zuerst eine allgemeine Beschreibung der Runde 10, mit dem Hinweis, dass auch der ESS 10 unter den Bedingungen der Pandemie stattfand. Was unter anderem die Feldzeit sehr stark gestreckt hat, was teilweise die Vergleichbarkeit der Daten zwischen den Ländern beeinflusst.</p>
+<p>Außerdem wurden zwar in den meisten Ländern die klassischen Face-to-Face Inteviews durchgeführt, in neun Ländern gab es aber Web oder Mail-Surveys, darunter auch in Deutschland.</p>
+<p>Das sehen wir auch hier unten, wo man die Datensätze herunterladen kann. Es werden zwei Datensätze angeboten: das integrated file, dass die Daten der Länder mit persönlichen Interviews enthält. Und das Self-completion integrated file, dass die Daten der 9 Web- und Mail survey Länder enthält. Will man einen vollständigen Datensatz über alle 31 Länder, muss man beide Datensätze importieren und zusammenfügen. Das werden wir uns auch gleich in R anschauen. Aber wir bleiben noch einen Moment auf dieser Seite. Hier gibt es nämlich noch weitere Interessante Dokumente.</p>
+<p>Zum Beispiel Fragebögen, Methodenberichte usw.</p>
+<p>Und besonders interessant für uns: es gibt hier ein User Guide zum Thema „Weighting ESS data”. Wenn Sie mit den Daten des ESS arbeiten, wäre es durchaus sinnvoll, dieses Dokument einmal gelesen zu haben. Das Wichtigste darin ist aber der Hinweis in Kapitel 3, dass der ESS 10 eine Gewichtungsvariable bereithält, die schon alle Gewichte enthält, die typischerweise relevant sind. Die Variable ‚ anweight’ analysis Weight.</p>
+<p>Wenn wir wissen, dass die Länder unterschiedliche Stichprobengrößen nutzen können, wissen wir auch, dass wenn wir Analysen die Länder zusammenfasst, zum Beispiel nach geografischen Regionen wie Ost, West, Nord, Süd Europa, oder nach Zeitpunkt ihres EU-Beitritts, oder vielleicht sogar, für die Europäische Bevölkerung insgesamt, dann müssen wir ein Designgewicht nutzen, welches die Anzahl der Befragten korrekt ins Verhältnis der jeweiligen Populationsgröße setzt. Das macht die Variable <code>pweight</code></p>
+<p>Dann muss noch für komplexe Stichprobendesigns innerhalb der Länder korrigiert werden, das macht die Variable <code>dweight</code>. Daneben gibt es ein Anpassunggewicht, gleichzeitig die Populationsgrößen ins Verhältnis setzt, aber auch Nonrepsonse Verzerrungen etwas ausgleicht. Weil es ein Post-Stratifikationsgewicht ist heißt es <code>pspweight</code>. Die Variable <code>anweight</code> ist nun nichts anderes als die Kombination dieser Gewichte (und das einfach nur dass die Gewichte miteinander Multipliziert wurden.</p>
+<p>Und wir müssen nichts weiter tun, als alle unsere Anaylsen mit anweight zu gewichten.</p>
+<p>Etwas weiter hinten in Abschnittt 4.3 erfahren wir noch, welche Variablen die Infomatinen über das komplexe Survey Design enthalten. Auch hier macht es uns der ESS leicht. Es gibt eine Variable mit den Primary Sampling Units, also den Cluster die genutzt wurden. Und es gibt eine Variable für die Schicht aus der die gesampelt wurde.</p>
+<p>Diese Variablen enthalten keine substantiellen Informationen, sondern nur ID Nummern. Es gneügt nämlich für die Berücksichtigung des Designs, wenn man die Schichten und Cluster eindeutig auseinanderhalten kann, ohne zu wissen, was sich dahinter konkret verbirgt als Schichtungsmerkmal oder welche konkrete Gemeinde den Klumpen bildet.</p>
+<p>Auch das schauen wir uns in R an:</p>
+<p>Ich importiere zunächst die beiden Datensätze:</p>
+<section id="daten-einlesen-1" class="level2">
+<h2 class="anchored" data-anchor-id="daten-einlesen-1">Daten einlesen</h2>
+<p>Dann führe ich die beiden Datensätze zusammen. Damit das problemlos klappt, nehme ich nur die Variablen, die in beiden Datensätzen vorhanden sind und nutze <code>rbind()</code> um die beiden Datensätze mit den Spalten sortiert nach den gemeinsamen Variablennamen aneinander zu hängen.</p>
+<p>Schauen wir nun noch auf die Variablennamen:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "name"     "essround" "edition"  "proddate" "idno"     "cntry"   
+ [7] "dweight"  "pspwght"  "pweight"  "anweight"</code></pre>
+</div>
+</div>
+<p>Hier finden wir die Gewichtungsvariablen und Variablen zum komplexen Stichprobendesign gleich am Anfang des Datensatzes. Hier Beispielsweise die Variable <code>anweight</code>. Wir sehen, dass es nicht wie beim Allbus nur zwei Gewichtungswerte gibt sondern ganz viele unterschiedliche…</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gewichtung3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Aus der Dokumentation wissen wir also nun, welche Art von komplexen Stichprobendesign genutzt wurde und wie die Daten zu gewichten sind. Gehen wir jetzt in R und öffnen wir den Datensatz und sehen uns die entsprechenden Gewichtungsvariablen einmal an.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -253,9 +406,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -320,6 +487,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -358,12 +611,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp(/^(?:http:|https:)\/\.github\.io\/uweremer/);
+      var filterRegex = new RegExp("^(?:http:|https:)\/\.github\.io\/uweremer");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -377,6 +630,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">© 2023, Uwe Remer</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">

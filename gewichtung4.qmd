@@ -1,15 +1,280 @@
 ---
-title: "1. Einstieg in die Gewichtung in R"
+title: "4. Wie nutzen wir einfache Gewichte in R? Das `sjmisc` und das `weights` Paket"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 # Figure size in inches
-w = 5
-h = 2.5
+w = 7
+h = 5
 s = 2.8
     
-knitr::opts_chunk$set(eval=TRUE, echo = FALSE, message = FALSE, warning = FALSE,
+knitr::opts_chunk$set(eval=TRUE, echo = TRUE, message = FALSE, warning = FALSE,
                       fig.width=w, fig.height=h, fig.align='center')
+library(kableExtra)
+library(sjPlot)
 ```
 
+# Einstieg
 
+Hallo und herzlich willkommen zum vierten Teil der Videoserie zum Thema "Gewichtung mit R". Nachdem wir in vorigen Teil drei gesehen haben, wo wir Informationen zur Gewichtung finden und vor allem, wie die konkreten Gewichtungsvariablen im Allbus und im ESS Datensatz aussehen, wollen wir jetzt die Gewichtung der Daten mit R umsetzen.
+
+Vielleicht aber noch folgendes vorweg: ich habe zwar keine systematisch gewonnen Erkenntnisse darüber, aber mein Eindruck ist, dass bei R Nutzerinnen und -nutzern das Thema der Gewichtung manchmal etwas verdrängt wird. Das liegt vielleicht auch daran, dass R im Vergleich zu anderen in den Sozialwissenschaften genutzten Statistikpaketen deutlich breiter, das heißt auch in anderen wissenschaftlichen Disziplinen genutzt wird. Umfragedaten und Auswertungen von Daten aus komplexen Strichproben sind bei vielen Anwendern gar nicht relevant. Auch Beispiele oder Tutorials beinhalten diesen Aspekt nicht, entweder weil es für die Daten nicht relevant ist, oder um die Beispiele einfach zu halten . Und schließlich ist R modular aufgebaut; Dass heißt es gibt unterschiedliche Pakete für unterschiedliche Zwecke, bei denen Gewichtung unter Umständen nicht relevant ist. Hinzu kommt, dass es in den meisten Basis Funktionen - den sogenannten base-R Funktionen, keine Möglichkeit gibt, Daten zu gewichten. Dafür muss man zusätzliche Pakete nutzen.
+
+Glücklicherweise gibt es verschiedene geeigneten Pakete, die teils das gleiche, teils unterschiedliches Funktionen für die Gewichtung von deskriptiver, bivariater und/oder multivariater Statistischer Verfahren ermöglichen. Diese sind neben wenigen base-R Funktionen:
+
+-   das `sjmisc` Paket
+-   das `weights` Paket
+-   und das `survey` Paket
+
+Das `survey` Paket ist dabei meine klare Empfehlung. Das schauen wir uns auch ausführlich in Teil fünf an, da es ein paar mehr Möglichkeiten bietet, als die anderen beiden Pakete. Für die einfache Gewichtung von deskriptiven Tabellen und Maßzahlen, sind die beiden ersten Pakete jedoch ausreichend.
+
+Lernziele dieses Videos sind, dass Sie wissen, wie man mit dem `sjmisc` Paket oder dem `weights` Paket Daten gewichtet und deskriptive und einfache bivariate Analysen durchführt.
+
+Wechseln wir also in R und schauen es uns genau an...
+
+# Daten einlesen
+
+Bevor wir mit der Gewichtung von Daten loslegen, müssen wir zuerst unsere beiden Datensätze einlesen.
+
+```{r import_allbus}
+library(foreign)
+allbus <- read.spss("./Daten/Allbus2021/ZA5280_v2-0-0.sav",
+                    to.data.frame = TRUE,
+                    use.value.labels = FALSE,
+                    reencode = TRUE)
+```
+
+```{r import_ess10}
+ess.i <- read.spss("./Daten/ESS10/ESS10.sav",
+                 to.data.frame = TRUE,
+                 use.value.labels = FALSE,
+                 reencode = TRUE)
+ess.sc <- read.spss("./Daten/ESS10/ESS10SC.sav",
+                 to.data.frame = TRUE,
+                 use.value.labels = FALSE,
+                 reencode = TRUE)
+
+# Zusammenführen
+vars <- names(ess.i)[names(ess.i) %in% names(ess.sc)]
+ess <- rbind(ess.sc[,vars], ess.i[,vars])
+
+ess <- ess[!(ess$cntry %in% c("IL", "RS")),]
+```
+
+# Das `sjmisc` Paket
+
+Das [`sjmisc` Paket](https://strengejacke.github.io/sjmisc/) ist nicht explizit für die Analyse von gewichteten Daten entwickelt worden. Es ist eine Art Schweizer Taschenmesser für die Datenvorbereitung. Sie können damit Recodieren, Dichotomisieren oder Variablen gruppieren usw. Aber - und das ist für uns wichtig - es gibt auch einige Funktionen, die gewichtete Analysen erlauben.
+
+Installieren wir also das `sjmisc` Paket und laden es aus der Bibliothek:
+
+```{r inst_load_sjmisc}
+#install.packages("sjmisc")
+library(sjmisc)
+```
+
+## Tabellen
+
+Der erste Schritt in jeder Analyse ist es, sich die interessierenden Variablen so nah an ihrer Rohform wie möglich anzusehen. Dafür bieten sich bei Variablen mit diskreten, also wenigen, überschaubaren Merkmalsausprägungen Häufigkeitstabellen an. Das sind in der Regel ordinale oder kategoriale Merkmale.
+
+Für ordinale oder kategoriale Merkmale, wo deskriptive Kennzahlen nur wenig Information bieten, lassen sich Häufigkeitstabellen nutzen.
+
+Als Beispiel betrachten wir aus dem Allbus die Variable `pv01` zur Sonntagsfrage.
+
+> Wenn am nächsten Sonntag Bundestagswahl wäre, welche Partei würden Sie dann mit Ihrer ZWEITSTIMME wählen?
+
+Es liegen die folgenden Merkmalsausprägungen vor: `r kable(rev(attr(allbus$pv01, "value.labels")))`
+
+Im `sjmisc` Paket lassen sich mit der Funktion `frq()` Häufigkeitstabellen erstellen. Die erste Zeile liefert die ungewichtete Häufigkeitstabelle.
+
+```{r tabellen_sjmisc_ungew}
+# Ungewichtet
+frq(allbus$pv01)
+```
+
+Aber wir in der Funktion `frq()` noch das Argument `weights` nutzen. Hier geben wir an, welche Gewichtungsvariable genutzt werden soll. Wenn die Anslysebene Personen ist und ganz Deutschland betrachtet werden soll, muss im Allbus 2021 die Gewichtungsvariable `wghtpew` genutzt werden.
+
+```{r tabellen_sjmisc_gewichtet}
+# Gewichtet nach wghtpew
+frq(allbus$pv01,
+    weights = allbus$wghtpew)
+```
+
+Betrachten wir mal nicht die Spalte *Raw %*, da hier die fehlenden Werte in der oberen Tabelle dabei sind, unten aber nicht. Leider kann ich Ihnen auch nicht sagen, warum die Funktion das unterschiedlich ausgibt. Selbst wenn ich in der unteren Zeile explizit angebe `show.na=TRUE` tauchen diese nicht auf. Aber abgesehen davon sehen wir tatsächlich auch substantielle Unterschiede zwischen den beiden Tabellen. Der Anteil der Parteien verändert sich nämlich leicht. Währen in der ersten Tabelle die Werte verzerrt waren, da ostdeutsche Befragte durch das Oversampling überreprsentiert waren, ist diese Verzerrung in der zweiten Tabelle ausgeglichen. Parteien, die in Ostdeutschland stärker sind als in Westdeutschland zeigen in der zweiten Tabelle also geringere Anteile als in der ersten. Ebenso NichtwählerInnen und der Anteil der Nichenpartei-Wähler.
+
+Oft möchte man die Ergebnisse einer solchen Häufigkeitstabelle zum Beispiel für Grafiken mit `ggplot2` weiter nutzen. Wir können die Tabelle dafür als Objekt speichern. Mit der Funktion `str()` sehen wir, das das Objekt ein Listenobjekt ist, welches als erstes Element einen `dataframe` enthält.
+
+```{r tabellen_sjmisc_gewichtet_obj}
+# Gewichtet nach wghtpew
+tabelle <- frq(allbus$pv01,
+               weights = allbus$wghtpew)
+str(tabelle)
+tabelle[[1]]
+```
+
+Diesen `dataframe` können wir direkt für `ggplot()` nutzen. Ich schließe noch die `NA`s aus, füge die Parteinamen hinzu und sortiere die Labels. Und schon kp
+
+```{r tabelle_to_ggplot}
+tabelle_df <- tabelle[[1]]
+tabelle_df <- tabelle_df[-9,] #Zeile mit dem NA eintrag ausschließen
+tabelle_df$label <- rev(names(attr(allbus$pv01, "value.labels")))
+tabelle_df$label <- as.factor(tabelle_df$label)
+tabelle_df$label <- forcats::fct_reorder(tabelle_df$label, tabelle_df$valid.prc)
+
+library(ggplot2)
+ggplot(tabelle_df, aes(x=label,
+                       y=valid.prc, 
+                       label=valid.prc,
+                       fill=label)) +
+  geom_bar(stat="identity") +
+  geom_label() +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Sonntagsfrage",
+       subtitle = "Anteil Zweitstimmen in Prozent",
+       caption="Quelle: Allbus 2021, Daten gewichtet mit Ost-West Personengewicht (wghtpew)")
+```
+
+## Deskriptive Maßzahlen
+
+Für metrische Merkmale, insbesondere, wenn sie kontiuierlich sind oder viele Merkmalsausprägungen aufweisen, sind Tabellen häufig ungeeignet. Stattdessen beschreiben wir diese Skalen mit deskriptiven Maßzahlen wie Mittewert und Standardabweichung.
+
+Betrachten wir für dieses Beispiel die Frage nach der Religiösität im Allbus in Variable `rb07`.
+
+> Würden Sie von sich sagen, dass Sie eher religiös oder eher nicht religiös sind? Wo würden Sie Ihre eigenen Ansichten auf dieser Skala einstufen? 1 'nicht religiös' ... 10 'religiös'
+
+Das `sjmisc`Paket bietet hier die Funktion `descr()` um eine Reihe relevanter deskriptive Maßzahlen auszugeben. Schauen wir zunächst auf die ungewichteten Zahlen:
+
+```{r descriptive_sjmisc_ungweichtet}
+descr(allbus$rb07)
+```
+
+Dann übergeben wir wieder die Gewichtungsvariable `wghtpew` als `weights` Argument. Ein kleiner Bug in der derzeitgen Version von `sjmisc` ist, dassfür die `descr()` Funktion, wenn ein Gewicht angegeben wird, die Angabe der Variablen mit dem \$-Operator nicht funktioniert, wir müssen also zunächst den `dataframe` angeben und danach als zweites Argument, die Variable, um die es geht.
+
+```{r descriptive_sjmisc_gewichtet}
+descr(allbus, 
+      rb07,
+      weights = wghtpew) 
+# Diese schreibweise funktioniert nicht:
+# descr(allbus$rb07,
+#      weights = allbus$wghtpew) 
+```
+
+Allerdings kann man auch mit einer base-R Funktion einen gewichteten Mittelwert anfordern. Und zwar mit `weighted.mean()`:
+
+```{r base_mean}
+weighted.mean(allbus$rb07, allbus$wghtpew, na.rm=T)
+```
+
+# Das `weights` Paket
+
+Anders als das `sjmisc`Paket ist das [`weights` Paket](https://cran.r-project.org/web/packages/weights/index.html) dezidiert dafür gedacht, einfache gewichtete Statistiken zu berechnen. Um das `weights` Paket nutzen zu können, müssen wir es zuerst installieren und aus der Bibliothek laden:
+
+```{r install_load_weights}
+#install.packages("weights")
+library(weights)
+```
+
+## Tabellen
+
+Auch mit dem `weights`Paket lassen sich einfache gewichtete Häufigkeitstabellen anfordern. Nutzen wir nun einmal den ESS als Beispiel. Ich lasse mir zunächst eine ungewichtete Häufigkeitstabelle für die Variable `cntry` ausgeben. Welchen Anteil machen die Beftragten eines Landes an allen Befragten aus.
+
+```{r}
+prop.table(table(ess$cntry))
+```
+
+Und dann gewichtet nach der Gewichtungsvariable `anweight`. Sie soll sicherstellen, dass wenn alle Länder gemeinsam betrachtet werden, die Anzahl der Befragten pro Land zueinander im Richtigen Verhältnis relativ zur jeweiligen Bevölkerungsgröße stehen.
+
+```{r}
+wpct(ess$cntry,
+     weight=ess$anweight, 
+     na.rm=TRUE)
+```
+
+Das können wir uns auch noch mal als Grafik anschauen:
+
+```{r}
+cntry_df <- data.frame(Land = rep(names(prop.table(table(ess$cntry))),2),
+                       Anteil = c(prop.table(table(ess$cntry)),
+                                  wpct(ess$cntry, weight=ess$anweight,na.rm=TRUE)),
+                       Modell = c(rep("ungewichtet", 29),
+                                  rep("gewichtet", 29)))
+ggplot(cntry_df, aes(x=Land, y=Anteil, 
+                     group=Modell, fill=Modell)) +
+  geom_bar(stat="identity", position="dodge") +
+  theme_bw() +
+  coord_flip() +
+  theme(legend.position = "bottom")
+```
+
+Befragte bevölkerungsstarker Länder werden also hochgewichtet, Befragte kleinerer Länder bekommen ein kleineres Gewicht, damit im Aggregat, das Verhältnis der Anzahl Befragten unabhängig von der jewiligen Stichprobengröße zu den Bevölkerungsgrößenverhältnissen der Länder zueinander passt.
+
+## Bivariate Statistik
+
+Neben der Funktion für Häufigkeiten, hat das `weights` Paket auch drei Funktionen für bivariate Statistik:
+
+-   $\chi^2$ Test
+-   Pearsons Korrelation
+-   t-Test
+
+### $\chi^2$ Test
+
+Testet die Nullhypothese, dass in der Kontingenztabelle kein Zusammenhang zwischen den beiden Merkmalen vorliegt. Hier: der Zusammenhang zwischen Bildung und Ländern.
+
+```{r weights_chi}
+wtd.chi.sq(ess$edulvlb, ess$cntry,  
+     weight=ess$anweight, 
+     na.rm=TRUE)
+```
+
+Es besteht also ein statistischer Zusammenhang zwischen der Verteilung der Bildungsabschlüsse und den Ländern.
+
+### Korrelation
+
+Auch Korrelationen lassen sich gewichtet berechnen. Im Beispiel nutzen wir noch einmal Variablen aus dem Allbus: die Religiösität und das Alter der Befragten. Zuerst die base-R Funktion, ohen Gewichtung. Dann die Funktion `wtd.cor()` aus dem `weights` Paket:
+
+```{r}
+cor.test(allbus$rb07, allbus$age)
+wtd.cor(allbus$rb07, allbus$age,  
+     weight=allbus$wghtpew)
+```
+
+Wie wir sehen, erhalten wir eine etwas höhere Korrelation in den gewichteten Daten. Das lässt sich damit erklären, dass in den ungewichteten Daten ostdeutsche Befragte überrepräsentiert sind, bei denen der Zusammenhang aufgrund der DDR-Sozialisation geringer ausfällt.
+
+### t-Test
+
+Schließlich gibt auch eine Funktion für einen gewichteten t-Test: `wtd.t.test()`
+
+Als Beispiel nutze ich aus dem Allbus die Variable `hs04`:
+
+> Wie häufig kam es in den letzten vier Wochen vor, dass Sie sich gehetzt oder unter Zeitdruck fühlten? 1 'immer' 5 'nie'
+
+Um einen t-Test für unabhängige Stichproben zu machen, muss ich noch die Gruppierungsvariable angeben. Hier die Variable `dh16`, ob Kinder im eigen Haushalt leben: 0 bedeutet Keine Kinder im HH, nicht-0, dass Kinder im HH leben.
+
+Betrachten wir zuerst den ungewichteten und danach den gewichteten t-Test:
+
+```{r, eval=T}
+# t-test für ungabhängige Stichproben
+
+# Variable allbus$dh16 Kinder im eigenen Haushalt: 
+# 0: Keine Kinder im HH,  nicht-0: Kinder im HH
+t.test(allbus$hs04[allbus$dh16!=0],
+       allbus$hs04[allbus$dh16==0])
+
+wtd.t.test(allbus$hs04[allbus$dh16!=0], 
+           allbus$hs04[allbus$dh16==0],  
+           weight=allbus$wghtpew[allbus$dh16!=0],
+           weighty=allbus$wghtpew[allbus$dh16==0])
+```
+
+Wir sehen, es werden jeweils leicht unterschiedliche Mittelwerte berechnet. Der Unterschied ist aber gemessen an den Standardfehlern so groß, dass in beiden Formen des t-Tests die Nullhypothese mit sehr geringer Irrtumswahrscheinlichkeit zurückgewiesen werden kann.
+
+Bei anderen Beispielen und vor allem bei geringerer Fallzahl kann es jedoch durchaus sein, dass sich die Signifikanz der Ergebnisse zwischen gewichteten und ungewichteten statistischen Tests unterscheiden.
+
+Dazu werden wir auch im nächsten Video ein Beispiel mit dem `survey` Paket sehen.
+
+```{r, echo=F, eval=F}
+knitr::purl("gewichtung4.qmd")
+```

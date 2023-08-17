@@ -1,0 +1,11 @@
+---
+title: "Ressourcen"
+---
+
+
+# RScript Dateien
+
+-   <a href="./Ressourcen/gewichtung3.R" download><i class="bi bi-file-earmark-code"></i> gewichtung3.R</a>
+-   <a href="./Ressourcen/gewichtung4.R" download><i class="bi bi-file-earmark-code"></i> gewichtung4.R</a>
+-   <a href="./Ressourcen/gewichtung5.R" download><i class="bi bi-file-earmark-code"></i> gewichtung5.R</a>
+-   <a href="./Ressourcen/gewichtung6.R" download><i class="bi bi-file-earmark-code"></i> gewichtung6.R</a>

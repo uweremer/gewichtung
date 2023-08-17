@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de-DE" xml:lang="de-DE"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dr.&nbsp;Uwe Remer">
 
-<title>Gewichtung in R - 1. Einstieg in die Gewichtung in R</title>
+<title>Gewichtung in R - 6. Wie gewichten wir komplexe Stichproben in R?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,8 +18,42 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -85,64 +119,71 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Gewichtung in R</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Startseite</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-skript" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Skript</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-skript">    
         <li>
-    <a class="dropdown-item" href="./gewichtung1.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung1.html" rel="" target="">
+ <span class="dropdown-text">1. Was ist Gewichtung?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung2.html">
- <span class="dropdown-text">2. Was hat Gewichtung mit Stichproben zu tun?</span></a>
+    <a class="dropdown-item" href="./gewichtung2.html" rel="" target="">
+ <span class="dropdown-text">2. Warum müssen wir gewichten?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung3.html">
- <span class="dropdown-text">3. Gewichtung in prominenten Surveys</span></a>
+    <a class="dropdown-item" href="./gewichtung3.html" rel="" target="">
+ <span class="dropdown-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung4.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung4.html" rel="" target="">
+ <span class="dropdown-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung5.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung5.html" rel="" target="">
+ <span class="dropdown-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./gewichtung6.html">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+    <a class="dropdown-item" href="./gewichtung6.html" rel="" target="">
+ <span class="dropdown-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./ressourcen.qmd">
+    <a class="nav-link" href="./ressourcen.qmd" rel="" target="">
  <span class="menu-text">Ressourcen</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">Kontakt</span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">1. Einstieg in die Gewichtung in R</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gewichtung6.html">6. Wie gewichten wir komplexe Stichproben in R?</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -150,62 +191,77 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-      <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Suchen"></div>
+        </div>
         </div>
         <div class="sidebar-tools-collapse tools-wide">
-    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="sidebar-tool px-1"><i class="bi bi-bank"></i></a>
-    <a href="https://github.com/uweremer/gewichtung" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="https://fediscience.org/@uweremer" title="" class="sidebar-tool px-1"><i class="bi bi-mastodon"></i></a>
+    <a href="https://www.sowi.uni-stuttgart.de/institut/team/Remer" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-bank"></i></a>
+    <a href="https://github.com/uweremer/gewichtung" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="https://fediscience.org/@uweremer" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-mastodon"></i></a>
 </div>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Was ist Gewichtung?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link">2. Was hat Gewichtung mit Stichproben zu tun?</a>
+  <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Warum müssen wir gewichten?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link">3. Gewichtung in prominenten Surveys</a>
+  <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link active">1. Einstieg in die Gewichtung in R</a>
+  <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#vergleich" id="toc-vergleich" class="nav-link active" data-scroll-target="#vergleich">Vergleich</a></li>
+  <li><a href="#ein-weiteres-beispiel" id="toc-ein-weiteres-beispiel" class="nav-link" data-scroll-target="#ein-weiteres-beispiel">Ein weiteres Beispiel</a></li>
+  <li><a href="#literatur" id="toc-literatur" class="nav-link" data-scroll-target="#literatur">Literatur</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">1. Einstieg in die Gewichtung in R</h1>
+<h1 class="title">6. Wie gewichten wir komplexe Stichproben in R?</h1>
 </div>
 
 
@@ -220,10 +276,375 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Bevor es los geht, importieren wir zuerst die Datensätze.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>allbus <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">"./Daten/Allbus2021/ZA5280_v2-0-0.sav"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">reencode =</span> <span class="cn">TRUE</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ess.i <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">"./Daten/ESS10/ESS10.sav"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">reencode =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ess.sc <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">"./Daten/ESS10/ESS10SC.sav"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">reencode =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Zusammenführen</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">names</span>(ess.i)[<span class="fu">names</span>(ess.i) <span class="sc">%in%</span> <span class="fu">names</span>(ess.sc)]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">rbind</span>(ess.sc[,vars], ess.i[,vars])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>ess <span class="ot">&lt;-</span> ess[<span class="sc">!</span>(ess<span class="sc">$</span>cntry <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"IL"</span>, <span class="st">"RS"</span>)),]</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Wie schon angekündigt, liegt die besondere Stärke des <code>survey</code> Paketes darin, dass auch komplexe Stichprobendesigns korrekt berücksichtigt werden können.</p>
+<p>Dazu schauen wir uns die Funktion zum Erstellen des survey-Design Objektes noch einmal genauer an.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>?svydesign</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Hier sehen Sie, welche Argumente der Funktion übergeben werden können.</p>
+<p>Wir können mit <code>ids</code> Cluster definieren, wir können mit <code>probs</code> Auswahlwahrscheinlichkeiten angeben, und wir können mit <code>strata</code> die Schichten des Samplings angeben. Das <code>weights</code> Argument kennen wir ja schon.</p>
+<p>Versuchen wir nun, das kompelxe Stichprobendesign des ESS mit Hilfe der <code>svydesign()</code> Funktion zu spezifizieren.</p>
+<p>Wie wir in Teil 2 gesehen haben, können die einzelnen Länder des ESS unterschiedliche Sampling-Strategien nutzen. Aber unabhängig von diesen Unterschieden sind alle notwendigen Informationen im Datensatz gespeichert:</p>
+<ul>
+<li><code>psu</code> enthält die IDs der Primary Sampling Units, wo Cluster-Sampling genutzt wurde</li>
+<li><code>stratum</code> enthält die IDs der Schichten</li>
+<li><code>prob</code> enthält die Auswahlwahrscheinlichkeiten</li>
+</ul>
+<p>Wenn wir jetzt das survey-Design Objekt definieren wollen, übergeben wir der <code>svydesign()</code> Funktion genau diese Variablen:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ess_svy <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids=</span><span class="sc">~</span>psu,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">strata =</span> <span class="sc">~</span>stratum,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                     <span class="co">#probs=prob, </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">weight=</span><span class="sc">~</span>anweight,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">nest=</span><span class="cn">TRUE</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> ess)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Wenn es im Sampling-Design vorkommen kann, dass Schichten nur einen Cluster enthalten, dann müssen wir das noch explizit in den Einstellungen erlauben:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.adjust.domain.lonely=</span><span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu=</span><span class="st">"average"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Jetzt können wir wieder ganz einfach die unterschiedlichen <code>svy...()</code> Funktionen nutzen: Hier zum Beispiel der Mittelwert:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dauert ein paar Sekunden...</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">svymean</span>(<span class="sc">~</span>stfdem, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">design=</span>ess_svy, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">na.rm =</span> T)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         mean     SE
+stfdem 5.2424 0.0224</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#warnings()</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Die Warnungen weisen auf einzelne PSU pro Schicht hin </span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="vergleich" class="level2">
+<h2 class="anchored" data-anchor-id="vergleich">Vergleich</h2>
+<p>Warum sollten wir immer wenn es möglich ist, das komplexe Stichprobendesign berücksichtigen?</p>
+<p>Das wollen wir uns genauer anschauen. Dafür definiere ich drei verschiedene survey-Design Objekte:</p>
+<ul>
+<li>eines ohne Gewichtung und ohne komplexes Design</li>
+<li>eines nur mit Gewichtung <code>anweight</code></li>
+<li>eines mit Gewichtung <code>anweight</code> und komplexen Stichprobendesign</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ungewichtet</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ess_svy_0 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> ess)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Nur Gewichtung</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ess_svy_1 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>, </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">weights =</span> <span class="sc">~</span>anweight,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> ess)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Gewichtung mit Berücksichtigung des komplexen Samplings</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>ess_svy_2 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids=</span><span class="sc">~</span>psu, </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">strata =</span> <span class="sc">~</span>stratum,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nest=</span><span class="cn">TRUE</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">weights =</span> <span class="sc">~</span>anweight,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> ess)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Als nächstes nutze ich die Funktion <code>svyby()</code>. Mit ihr kann ich gruppierte Mittelwerte anfordern. Hier für die Variable <code>atcherp</code>:</p>
+<blockquote class="blockquote">
+<p>And how emotionally attached do you feel to Europe? 0 ‘Not at all emotionally attached’ … 10 ‘Very emotionally attached’</p>
+</blockquote>
+<p>Als Gruppierungsvariable nutze ich die Länder (<code>cntry</code>).</p>
+<p>Beide Variablen nutze ich nun in der <code>svyby()</code> Funktion:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">svyby</span>(<span class="sc">~</span>atcherp, <span class="at">by=</span><span class="sc">~</span>cntry, <span class="at">design=</span>ess_svy_0, <span class="at">FUN=</span>svymean, <span class="at">na.rm=</span>T)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   cntry  atcherp         se
+AT    AT 5.928210 0.05935135
+BE    BE 5.920777 0.06475011
+BG    BG 5.466194 0.05605352
+CH    CH 5.973440 0.05790641
+CY    CY 4.887356 0.09286244
+CZ    CZ 6.528882 0.05050476
+DE    DE 6.287193 0.02762545
+EE    EE 5.526728 0.06806747
+ES    ES 6.356475 0.05553840
+FI    FI 6.604220 0.05207811
+FR    FR 6.143661 0.05610890
+GB    GB 4.650919 0.08347702
+GR    GR 5.404117 0.04432934
+HR    HR 5.767132 0.07108796
+HU    HU 7.482702 0.05184402
+IE    IE 6.152000 0.05652159
+IS    IS 5.852514 0.07665338
+IT    IT 5.939870 0.04368123
+LT    LT 5.588345 0.07485115
+LV    LV 5.204344 0.08805639
+ME    ME 5.629338 0.08008507
+MK    MK 4.536499 0.08409317
+NL    NL 5.890710 0.05359573
+NO    NO 6.401989 0.05931396
+PL    PL 6.199117 0.06294700
+PT    PT 6.474095 0.05672537
+SE    SE 5.857269 0.05348753
+SI    SI 6.002425 0.07121849
+SK    SK 6.173851 0.07434604</code></pre>
+</div>
+</div>
+<p>Aber ich möchte mir die Ergebnisse speichern, um gleich eine Vergleichsgrafik zu erstellen. Also schreibe ich das Resultat in ein Objekt:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mw0 <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>atcherp, <span class="at">by=</span><span class="sc">~</span>cntry, <span class="at">design=</span>ess_svy_0, <span class="at">FUN=</span>svymean, <span class="at">na.rm=</span>T) </span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Und in diesem ergänze ich eine Variable, die enthält, welches Design ich nutze. Dann erstelle ich noch das 95%-ige Konfidenzintervall. Das bekomme ich, wenn ich vom berechneten Mittelwert um 1.96 Standardfehler nach oben gehen. Und für die untere Grenze, wenn ich vom Mittelwert 1.96 Sandardfehler nach unten gehe.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mw0<span class="sc">$</span>Modell <span class="ot">&lt;-</span> <span class="st">"1. ohne Gewichtung"</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mw0<span class="sc">$</span>ci_hi <span class="ot">&lt;-</span> mw0<span class="sc">$</span>atcherp <span class="sc">+</span> (<span class="fl">1.96</span><span class="sc">*</span>mw0<span class="sc">$</span>se) </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>mw0<span class="sc">$</span>ci_lo <span class="ot">&lt;-</span> mw0<span class="sc">$</span>atcherp <span class="sc">-</span> (<span class="fl">1.96</span><span class="sc">*</span>mw0<span class="sc">$</span>se)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Und diese Schritte führe ich auch auf Basis der anderen beiden survey-Design Objekte aus:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mw1 <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>atcherp, <span class="at">by=</span><span class="sc">~</span>cntry, <span class="at">design=</span>ess_svy_1, <span class="at">FUN=</span>svymean, <span class="at">na.rm=</span>T)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mw1<span class="sc">$</span>Modell <span class="ot">&lt;-</span> <span class="st">"2. nur Gewichtung"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mw1<span class="sc">$</span>ci_hi <span class="ot">&lt;-</span> mw1<span class="sc">$</span>atcherp <span class="sc">+</span> (<span class="fl">1.96</span><span class="sc">*</span>mw1<span class="sc">$</span>se)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mw1<span class="sc">$</span>ci_lo <span class="ot">&lt;-</span> mw1<span class="sc">$</span>atcherp <span class="sc">-</span> (<span class="fl">1.96</span><span class="sc">*</span>mw1<span class="sc">$</span>se)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>mw2 <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>atcherp, <span class="at">by=</span><span class="sc">~</span>cntry, <span class="at">design=</span>ess_svy_2, <span class="at">FUN=</span>svymean, <span class="at">na.rm=</span>T)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>mw2<span class="sc">$</span>Modell <span class="ot">&lt;-</span> <span class="st">"3. Gewichtung mit Sampling Design"</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>mw2<span class="sc">$</span>ci_hi <span class="ot">&lt;-</span> mw2<span class="sc">$</span>atcherp <span class="sc">+</span> (<span class="fl">1.96</span><span class="sc">*</span>mw2<span class="sc">$</span>se)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>mw2<span class="sc">$</span>ci_lo <span class="ot">&lt;-</span> mw2<span class="sc">$</span>atcherp <span class="sc">-</span> (<span class="fl">1.96</span><span class="sc">*</span>mw2<span class="sc">$</span>se)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Danach fasse alle drei Datensätze zusammen und sortiere noch die Länder nach den Mittelwerten, damit es übersichtlicher wird:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mw0, mw1, mw2)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>cntry <span class="ot">&lt;-</span> forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(df<span class="sc">$</span>cntry, df<span class="sc">$</span>atcherp)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Jetzt kann ich die Vergleichsgrafik mit <code>ggplot()</code> erstellen:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>cntry, <span class="at">y=</span>atcherp, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">ymin=</span>ci_lo, <span class="at">ymax=</span>ci_hi,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">color=</span>Modell)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">mean</span>(df<span class="sc">$</span>atcherp)) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"bottom"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gewichtung6_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Was sehen wir hier in der Grafik. Die Punkte sind der geschätzte Mittelwert je Land, gemeinsam mit dem 95%igen Konfidenzintervall. Die roten Punkte basieren jeweils auf den ungewichteten Daten. Die grünen Mittelwerte basieren auf den gewichteten Daten, und die blauen auf auf den gewichteten Daten und der korrekten Angabe des komplexen Stichprobendesigns.</p>
+<p>Zunächst sehen wir, dass wir tatsächlich verzerrte Mittelwerte schätzen würden, wenn wir die Daten nicht gewichten. Deutlich sehen wir das für Zypern oder Nord-Mazedonien, aber auch Litauen und Deutschland. Außerdem können wir feststellen, dass die Konfidenzintervalle zum Teil deutlich größer sind.</p>
+<p>Betrachten wir nun noch en Unterschied zwischen den gewichteten Mittelwerten und denen, bei welchen auch das Stichprobendesign berücksichtigt wird. Hier sind die geschätzten Mittelwerte zwar absolut identisch, aber wie wir sehen sind die Konfidenzintervalle und damit die Standardfehler in den meisten Fällen noch mal etwas größer.</p>
+<p>Was bedeutet das? Nun, das bedeutet, das wenn wir das komplexe Stichprobendesign nicht korrekt berücksichtigen, wir die Standardfehler (auf diesen basieren ja die Konfidenzintervalle) unterschätzen!</p>
+<p>Würden wir Sgnifikanztests auf Basis dieser Standardfehler berechnen, würden wir vorschnell von Signifikanten Effekten ausgehen, wo unter Umständen keine zu finden sind.</p>
+<p>Wie groß die Unterschiede sind können wir uns auch nochmal anschauen, indem wir die Standardfehler ins Verhältnis setzen:</p>
+<p>In einem viertel der Fälle ist der wahre Standardfehler also mehr als das 1,3-fache größer.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">sort</span>(mw2<span class="sc">$</span>se<span class="sc">/</span>mw1<span class="sc">$</span>se))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gewichtung6_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ein-weiteres-beispiel" class="level2">
+<h2 class="anchored" data-anchor-id="ein-weiteres-beispiel">Ein weiteres Beispiel</h2>
+<p>Für das zweite Beispiel nutzen wir den Allbus und rechnen eine lineare Regression.</p>
+<p>Als abhängige Variable verwenden wir <code>ps03</code>, die Frage nach der Demokratiezufriedenheit. Die Skala geht von 1 ‘sehr zufrieden’ bis 5 ‘sehr unzufrieden’. Deshlb drehe ich sie zuerst und speichere die neue Variable unter<code>demzufr</code> im Datensatz:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>allbus<span class="sc">$</span>demzufr <span class="ot">&lt;-</span> <span class="fu">abs</span>(allbus<span class="sc">$</span>ps03<span class="dv">-5</span>) <span class="co">#Skala reicht nun von 0 bis 4.</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Vertrauen Bundestag <code>allbus$pt03</code></li>
+<li>Bildung <code>isced97</code></li>
+<li>Nettoeinkommen <code>allbus$incc</code></li>
+<li>Alter <code>age</code></li>
+<li>Landesteil <code>eastwest</code></li>
+<li>Interatkionseffekt: Landesteil mit Vertrauen Bundestag</li>
+</ul>
+<p>Auch hier definieren wir zuerst das survey-Design Objekt.</p>
+<p>Für die korrekte Defintion des Designs geben wir bei <code>ids</code> die Primary Sampling Units an. Wie wir in Teil 2 gesehen haben, ist das die Variable <code>xs11</code>. Für die Schichtungsvariablen kann man aus dem Datensatz die Variablen <code>land</code>, <code>bik</code>, und <code>gkpol</code> nutzen. Wie bereits zuvor, muss man die Variable <code>wghtpew</code> als Gewichtungsvariable übergeben.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#allb_svy_2 &lt;- svydesign(ids=~xs11, </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                       strata = ~ ostwet + land + bik + gkpol,</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                       nest=TRUE,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                       weights = ~wghtpew,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                       data = allbus)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fehlermeldung aufgrund fehlender Werte</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(allbus<span class="sc">$</span>land))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(allbus<span class="sc">$</span>bik))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 174</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(allbus<span class="sc">$</span>gkpol))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 68</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>allbus <span class="ot">&lt;-</span> allbus[<span class="fu">complete.cases</span>(allbus[,<span class="fu">c</span>(<span class="st">"eastwest"</span>,<span class="st">"land"</span>,<span class="st">"bik"</span>,<span class="st">"gkpol"</span>)]),]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>allb_svy_2 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids=</span><span class="sc">~</span>xs11, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">strata =</span> <span class="sc">~</span> eastwest <span class="sc">+</span> land <span class="sc">+</span> bik <span class="sc">+</span> gkpol,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nest=</span><span class="cn">TRUE</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">weights =</span> <span class="sc">~</span>wghtpew,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> allbus)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Und dann benötigen wir noch für den Vergleich ein <code>survey</code> Design Objekt ohne das Stichprobendesign:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>allb_svy_1 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">weights =</span> <span class="sc">~</span>wghtpew,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> allbus)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nun können wir die Regressionen rechnen:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>variablen <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"demzufr"</span>, <span class="st">"pt03"</span>, <span class="st">"isced97"</span>, <span class="st">"incc"</span>, <span class="st">"age"</span>, <span class="st">"eastwest"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>allbus <span class="ot">&lt;-</span> allbus[<span class="fu">complete.cases</span>(allbus[,variablen]),]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(demzufr <span class="sc">~</span> pt03 <span class="sc">+</span> isced97 <span class="sc">+</span> incc <span class="sc">+</span> age <span class="sc">+</span> eastwest <span class="sc">+</span> pt03<span class="sc">:</span>eastwest, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">design=</span>allb_svy_1,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">family=</span>stats<span class="sc">::</span><span class="fu">gaussian</span>())</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(demzufr <span class="sc">~</span> pt03 <span class="sc">+</span> isced97 <span class="sc">+</span> incc <span class="sc">+</span> age <span class="sc">+</span> eastwest <span class="sc">+</span> pt03<span class="sc">:</span>eastwest,  </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">design=</span>allb_svy_2,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">family=</span>stats<span class="sc">::</span><span class="fu">gaussian</span>())</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(fit1)</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(fit2)</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">screenreg</span>(<span class="fu">list</span>(fit1, fit2))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=======================================
+               Model 1      Model 2    
+---------------------------------------
+(Intercept)       0.74 ***     0.74 ***
+                 (0.17)       (0.17)   
+pt03              0.38 ***     0.38 ***
+                 (0.03)       (0.03)   
+isced97           0.02         0.02    
+                 (0.02)       (0.02)   
+incc              0.01 ***     0.01 ***
+                 (0.00)       (0.00)   
+age               0.00 ***     0.00 ***
+                 (0.00)       (0.00)   
+eastwest         -0.22 *      -0.22 *  
+                 (0.10)       (0.10)   
+pt03:eastwest    -0.02        -0.02    
+                 (0.02)       (0.02)   
+---------------------------------------
+Deviance       2012.99      2012.99    
+Dispersion        0.71         0.71    
+Num. obs.      2831         2831       
+=======================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+<p>So sehen wir kein Unterschied zwischen beiden Modellen, auch nicht bei den Standardfehlern, zumindest nicht auf zwei Nachkommastellen.</p>
+<p>Wenn wir jedoch weniger Fälle hätten, oder aus anderen Gründen die Teststärke geringer wäre, dann kann es durchaus sein, dass Signifikanztests anders ausfallen.</p>
+<p>Hier ein Beispiel, wenn wir nur 800 Fälle hätten:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>allbus_small <span class="ot">&lt;-</span> allbus[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(allbus), <span class="dv">1000</span>),]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>allb_s_svy_1 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>, </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">weights =</span> <span class="sc">~</span>wghtpew,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> allbus_small)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>allb_s_svy_2 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids=</span><span class="sc">~</span>xs11, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">strata =</span> <span class="sc">~</span>land <span class="sc">+</span> bik <span class="sc">+</span> gkpol,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nest=</span><span class="cn">TRUE</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">weights =</span> <span class="sc">~</span>wghtpew,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> allbus_small)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>fit1.s <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(ps03 <span class="sc">~</span> pt03 <span class="sc">+</span> isced97 <span class="sc">+</span> incc <span class="sc">+</span> age <span class="sc">+</span> eastwest <span class="sc">+</span> pt03<span class="sc">:</span>eastwest, </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">design=</span>allb_s_svy_1,</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">family=</span>stats<span class="sc">::</span><span class="fu">gaussian</span>())</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>fit2.s <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(ps03 <span class="sc">~</span> pt03 <span class="sc">+</span> isced97 <span class="sc">+</span> incc <span class="sc">+</span> age <span class="sc">+</span> eastwest<span class="sc">+</span> pt03<span class="sc">:</span>eastwest,  </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">design=</span>allb_s_svy_2,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">family=</span>stats<span class="sc">::</span><span class="fu">gaussian</span>())</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">screenreg</span>(<span class="fu">list</span>(fit1.s, fit2.s))</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=======================================
+               Model 1      Model 2    
+---------------------------------------
+(Intercept)       4.39 ***     4.39 ***
+                 (0.34)       (0.38)   
+pt03             -0.33 ***    -0.33 ***
+                 (0.07)       (0.07)   
+isced97          -0.07 *      -0.07    
+                 (0.03)       (0.04)   
+incc             -0.02 **     -0.02 *  
+                 (0.01)       (0.01)   
+age              -0.00 *      -0.00 *  
+                 (0.00)       (0.00)   
+eastwest          0.37         0.37    
+                 (0.21)       (0.22)   
+pt03:eastwest    -0.03        -0.03    
+                 (0.05)       (0.05)   
+---------------------------------------
+Deviance        859.47       859.47    
+Dispersion        0.86         0.86    
+Num. obs.      1000         1000       
+=======================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+<p>Der Effekt von Bildung ist nicht mehr signifikant. Wir wären also zunächst fälschlicherweise davon ausgegangen, dass Bildung einen signifikanten Einfluss hat. Berücksichtigt man das Stichprobendesign korrekt im survey-Design Objekt, dann erhalten wir das eigentlich korrekte Ergebnis, bei dem Bildung keine Rolle spielt.</p>
+<p>Zwar muss man sagen, dass die Unterschiede bei den größeren Effekten, selbst bei dieser reduzierten Fallzahl kaum ins Gewicht fallen, dennoch: Das weiß man nicht vorher.</p>
+<p>Da wir ja gesehen haben, wie einfach sich das komplexe Samplingdesign und die Gewichtung mit dem <code>survey</code> Paket umsetzen lassen, sollte man das einfach zur Routine machen.</p>
+</section>
+<section id="literatur" class="level2">
+<h2 class="anchored" data-anchor-id="literatur">Literatur</h2>
+<ul>
+<li>Elff, M., 2021. Data Management in R: A Guide for Social Scientists. SAGE, London. <a href="https://doi.org/10.4135/9781529739718" class="uri">https://doi.org/10.4135/9781529739718</a></li>
+<li>Gabler, S., Ganninger, M., 2010. Gewichtung, in: Wolf, C., Best, H. (Eds.), Handbuch der sozialwissenschaftlichen Datenanalyse. VS Verlag für Sozialwissenschaften, Wiesbaden, pp.&nbsp;143–164. <a href="https://doi.org/10.1007/978-3-531-92038-2_7" class="uri">https://doi.org/10.1007/978-3-531-92038-2_7</a></li>
+</ul>
 
 
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Fußnoten</h2>
+
+<ol>
+<li id="fn1"><p>Im Code ist <code>probs</code> auskommentiert, da die Argumente <code>weight</code> und <code>probs</code> nicht gleichzeitig genutzt werden können.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://r-survey.r-forge.r-project.org/survey/exmample-lonely.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -251,9 +672,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -318,6 +753,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -356,12 +877,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp(/^(?:http:|https:)\/\.github\.io\/uweremer/);
+      var filterRegex = new RegExp("^(?:http:|https:)\/\.github\.io\/uweremer");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -375,6 +896,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">© 2023, Uwe Remer</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">

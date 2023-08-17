@@ -1,15 +1,235 @@
 ---
-title: "1. Einstieg in die Gewichtung in R"
+title: "5. Wie nutzen wir einfache Gewichte in R? Das `survey` Paket"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 # Figure size in inches
 w = 5
 h = 2.5
-s = 2.8
+#s = 2.8
+
+w = 10
+h = 5
+#s = 1
     
-knitr::opts_chunk$set(eval=TRUE, echo = FALSE, message = FALSE, warning = FALSE,
+knitr::opts_chunk$set(eval=TRUE, echo = TRUE, message = FALSE, warning = FALSE,
                       fig.width=w, fig.height=h, fig.align='center')
 ```
 
+# Einstieg
 
+Hallo und herzlich willkommen zum fünften Teil der Videoserie zum Thema "Gewichtung mit R". Im vorigen Teil vier haben wir schon ein paar Funktion aus dem `sjmisc` und dem `weights` Paket kennengelernt, mit denen wir Daten einfach durch die Angabe der Gewichtungsvariable gewichten konnten.
+
+In diesem Teil wollen wir uns nun das [`survey` Paket](https://cran.r-project.org/web/packages/survey/index.html) genauer anschauen. Das `survey` Paket ist *der* Standard für die Gewichtung von Daten in R. Es bietet nicht nur die meisten Funktionen, sondern ist am meisten ausgereift, was die Entwicklung betrifft. Der Aufbau der Funktionen ist sehr kohärent und die Integration in einen typischen Analyseablauf gelingt ausgezeichnet.
+
+Der stärkste Vorteil des `survey` Paketes liegt aber darin, das man das komplexe Sampling-Design angeben kann, aus dem die Daten stammen. Erst damit wird es möglich auch die statistischen Folgen des Stichprobendesigns korrekt in den Analysen zu berücksichtigen - also auch die Varianzen und damit Standardfehler richtig zu schätzen.
+
+Dazu schauen wir uns zuerst die grundlegende Funktionsweise des `survey` Paketes und seiner Funktionen an. Danach gibt es zwei Beispielen, an denen deutlich wird, wie wichtig die Berücksichtigung des Stichprobendesigns ist, um belastbare Ergebnisse zu erhalten. Ein Beispiel wird die Daten des Allbus nutzen, das andere die des ESS.
+
+Am Ende des Videos sollen Sie in der Lage sein, ein komplexes Stichprobendesign korrekt als `survey`-Designobjekt in R definieren zu können um damit verschiedene deskriptive, bivariate und multivariate Analysen durchführen zu können. Außerdem sollen Sie aus diesem Video mitnehmen, dass das Stichprobendesign nicht nur die Punktschätzer verzerren kann, sondern auch Auswirkungen auf die Signifikanztests hat, weil die Schätzung der Varianzen und damit der Standardfehler beeinflusst wird.
+
+Wechseln wir also nun in R und schauen und das `survey` Paket an...
+
+# Das `survey` Paket in R
+
+Bevor wir loslegen können, importieren wir wieder den Allbus und den ESS Datensatz, bzw. beide ESS Datensätze und spielen sie zusammen.
+
+```{r import_allbus}
+library(foreign)
+allbus <- read.spss("./Daten/Allbus2021/ZA5280_v2-0-0.sav",
+                    to.data.frame = TRUE,
+                    use.value.labels = FALSE,
+                    reencode = TRUE)
+```
+
+```{r import_ess10}
+library(foreign)
+ess.i <- read.spss("./Daten/ESS10/ESS10.sav",
+                 to.data.frame = TRUE,
+                 use.value.labels = FALSE,
+                 reencode = TRUE)
+ess.sc <- read.spss("./Daten/ESS10/ESS10SC.sav",
+                 to.data.frame = TRUE,
+                 use.value.labels = FALSE,
+                 reencode = TRUE)
+
+# Zusammenführen
+vars <- names(ess.i)[names(ess.i) %in% names(ess.sc)]
+ess <- rbind(ess.sc[,vars], ess.i[,vars])
+
+ess <- ess[!(ess$cntry %in% c("IL", "RS")),]
+```
+
+Dann laden wir installieren wir das `survey` Paket und laden es aus der Bibliothek:
+
+```{r install_survey}
+#install.pakckages("survey")
+library(survey)
+```
+
+# Grundlegende Funktionsweise
+
+Man kann das `survey` Paket für die einfache Gewichtung von Daten mit Hilfe einer Gewichtungsvariable nutzen, oder man kann mit dem Paket zusätzlich zur Gewichtung das komplexe Stichprobendesign von Daten berücksichtigen.
+
+In beiden Fällen ist der Ablauf gleich:
+
+Man definiert zuerst ein sogenanntes survey-Design Objekt mit der Funktion `svydesign()`. Dieses Objekt enthält die Daten und die Informationen zur Gewichtung und zum Stichprobendesign.
+
+Dann nutzt man - je nach dem, welche Analyse man durchführen möchte - die passende Funktion aus dem `survey` Paket, und wendet sie auf das survey-Design Objekt an.
+
+Diese Grundlogi schauen wir uns als erstes an einem einfachen Beispiel an. Wie schon in Teil vier wollen wir aus dem Allbus die Sonntagsfrage nach der Wahlabsicht als Tabelle mit gewichteten Daten ausgeben lassen. Das war die Variable `pv01`. Und die Gewichtungsvariable im Allbus war die Variable `wghtpew`.
+
+Als erstes definieren wir das survey-Design Objekt mit der Funktion `svydesign()`.
+
+In der einfachsten Form, wenn das survey-Design nur die Gewichtungsvariable enthalten soll, dann sieht der Befehl so aus (wichtig ist, das das `survey` Paket alle Variablenangaben mit einer Tilde `~` erwartet:[^1]
+
+[^1]: Als weiterführende Info: das ist deshalb der Fall, da die Angaben als Formel interpretiert werden und so auch Interaktionen definiert werden können
+
+```{r erstes_beispiel_def_svydes}
+allbus_svy <- svydesign(ids=~1, # Definiert die Cluster. Wenn ~1 keine Cluster
+                        weights=~wghtpew, # Gewichtungsvariable
+                        data=allbus) # Datensatz
+```
+
+Jetzt können wir die Funktion `svytable()` nutzen, um eine Häufigkeitstabelle auf Basis des survey-Design Objektes zu erstellen. Da im survey-Design Objekt die Gewichtung definiert wurde, erhalten wir nun eine gewichtete Häufigkeitstabelle:
+
+```{r erstes_beispiel_svytable}
+svytable(~pv01, design=allbus_svy)
+```
+
+Das wir hier Dezimalstellen haben, obwohl es absolute Häufigkeiten sind, liegt an der Gewichtung. Natürlich gibt es nicht `r svytable(~pv01, design=allbus_svy)[1]` Befragte. Wen das stört: man kann Angeben, auf welche Fallzahl standardisiert werden soll und das gerundet wird:
+
+```{r erstes_beispiel_svytable2}
+svytable(~pv01, 
+         design=allbus_svy,
+         Ntotal=sum(!is.na(allbus$pv01)),
+         round=T)
+```
+
+Wenn man auf 100 Befragte standardisiert, erhält man natürlich das selbe Ergebnis, wie wenn man eine relative Häufigkeitstabelle mit `prop.table()` anfordert:
+
+```{r erstes_beispiel_svytable3}
+svytable(~pv01, 
+         design=allbus_svy,
+         Ntotal=100)
+
+prop.table(svytable(~pv01, design=allbus_svy))*100
+```
+
+Wir können auch Kreuztabellen erstellen. Hier sehen wir auch, warum das `survey` Paket die Tilde `~` vor der Variablenangabe erwartet - die Angaben werden als `formula` Angabe interpretiert. So können wir Interaktionen definieren:
+
+```{r erstes_beispiel_prop_svytable}
+svytable(~pv01+sex, design=allbus_svy)
+```
+
+Hätten wir oben bei der Definition des survey-Design Objekt keine Gewichtung angegeben, hätten wir als Resultat eine ungewichtete Tabelle erhalten (und erhalten deshalb eine Warnung - schließlich nutzen wir extra die `svytable()` Funktion um gewichten zu können):
+
+```{r erstes_beispiel_ohne_weights}
+allbus_svy_ohne_weight <- svydesign(ids=~1,
+                                    data=allbus)
+prop.table(svytable(~pv01, design=allbus_svy_ohne_weight))
+```
+
+# Verschiedene Funktionen
+
+Das `survey` Paket hält eine große Vielzahl an Funktionen für unterschiedliche statistische Verfahren bereit.
+
+Das können wir uns mal in der Beschreibung des Paketes anschauen... Entweder in RStudio, indem wir im Reiter "Pakete" auf das `survey` Paket klicken, oder inde, wir die pdf Dokumentation aufrufen: https://cran.r-project.org/web/packages/survey/survey.pdf
+
+Das Paket enthält viele Funktionen, die wir überhaupt nicht direkt nutzen wollen, oder die sehr spezielle Probleme lösen. Was für uns wichtig ist, sind die Funktionen, die mit `svy...()` beginnen. Also scrollen wir mal zum Buchstaben "S"...
+
+Hier sehen Sie eine Reihe von Funktionen, die ganz unterschiedliche statistische Tests mit dem survey-Design Objekt durchführen können, die also die im survey-Design Objekt angegebene Gewichtung und das Stichprobendesign berücksichtigen.
+
+Zum Beispiel hier, einen $\chi^2$ Test mit der Funktion `svychisq()` oder hier einen gewichteten Mittelwert mir der Funktion `svymean()`, oder auch einen t-Test mit `svyttest()`.
+
+Alle funktionieren nach der gleichen Logik. Schauen wir uns nochmal ein einfaches Beispiel an, der Mittelwert für Religiösität im Allbus (Variable `rb07`, 1 'nicht religiös' ... 10 'religiös'):
+
+```{r svymean_age_allbus}
+svymean(~rb07, allbus_svy, na.rm=T)
+```
+
+Und jetzt machen wir mal einen Mittelwertvergleich mittels t-Test, ob die Bayern tatsächlich religiöser sind als der Rest von Deutschland. Dazu bereite ich kurz eine dichotome Variable vor, Bayern ja/nein:
+
+```{r svyttest_bayern}
+# Bayern ist Merklamsausprägung 90
+attr(allbus$land,"value.labels")
+
+# Gruppierungsvariable vorbereiten:
+allbus$bayern <- car::recode(allbus$land,
+                             "10:80 = FALSE;
+                             90 = TRUE;
+                             100:160 = FALSE;
+                             else = NA")
+```
+
+Und diese nutze ich nun als Gruppierungsvariable in meiner `svyttest()` Funktion:
+
+```{r svyttest_bayern_error, eval=F}
+svyttest(rb07~bayern, allbus_svy, na.rm=T)
+```
+
+Tja, und wie geplant: Der Code läuft nicht, sondern produziert eine Fehlermeldung! Warum ist das so: Wir haben die Variable `bayern` im Objekt `allbus` erstellt. Wir arbeiten in der `svyttest()` Funktion mit dem zuvor erstellten survey-Design Objekt. In diesem ist die `bayern` Variable ja gar nicht enthalten.
+
+> Also wir merken uns: wenn Änderungen an den Variablen durchgeführt werden, muss das survey-Design Objekt aktualisiert werden!
+
+```{r svyttest_bayern_fertig}
+allbus_svy <- svydesign(ids=~1, # Definiert die Cluster. Wenn ~1 keine Cluster
+                        weights=~wghtpew, # Gewichtungsvariable
+                        data=allbus) # Datensatz
+svyttest(rb07~bayern, allbus_svy, na.rm=T)
+```
+
+## Regression mit dem `survey` Paket
+
+Kommen wir nun noch zu einer letzten `svy...()` Funktion, die ich Ihnen zeigen möchte.
+
+Es handelt sich um den Regressionsbefehl.
+
+Regressionen mit gewichteten Daten lassen sich auch mit der base-R Funktion `lm()` für linear model, also für die OLS Regression berechnen.
+
+Hier sehen wir den OLS Regressionsbefehl, mit Gewichtung um die Variable `wghtpew`.
+
+```{r}
+fit.lm <- lm(ps03 ~ pt03 + isced97 + incc + age + eastwest, 
+             data=allbus,
+             weight=wghtpew)
+summary(fit.lm)
+```
+
+Regressionen mit gewichteten Daten lassen sich aber auch im `survey` Paket umsetzen. Dazu nutzen wir die Funktion `svyglm()`:
+
+```{r}
+fit <- svyglm(ps03 ~ pt03 + isced97 + incc + age + eastwest,
+              design=allbus_svy)
+summary(fit)
+```
+
+$R^2$ berechnen mit Hilfe des `performance` Paketes:
+
+```{r}
+performance::r2(fit)
+```
+
+Wir wir sehen, sind die Ergebnisse identisch zu den Ergebnissen der Regression mit dem `lm()` Befehl.
+
+Sie werden schon gemerkt haben, dass ist nicht das klassische OLS Modell, dass wir in R mit der Funktion `lm()` für linear model aufrufen. Stattdessen ist es ein sogenanntes *G*eneralisiertes *L*ineares *M*odell *GLM*. Aber auch `svyglm()` schätzt, wenn man keine weiteren Argumente angibt, eine lineare Regression - nur eben mit dem Maximum Likelihood Schätzer.
+
+Wir können die `svyglm()` aber auch nutzen um eine Vielzahl anderer Modelle zu schätzen. Zum Beispiel logistische Regression, Multinomiale Regression oder Poisson-Regression. Man muss nur die passende Link-Funktion angeben. Wer dazu mehr wissen will, schaut sich am besten die Hilfe zur `svyglm()` Funktion an:
+
+```{r, eval=F}
+?svyglm
+```
+
+SIe werden sich jetzt sicher Fragen: Wenn der `lm()` Befehl die gleichen Ergebnisse liefert, wie die komplizierte `svyglm()` Funktion? Warum sollten wir sie dann nutzen?
+
+Das ist eine sehr gute Frage. Aber die noch bessere Antwort gibt es im nächsten Teil 6.
+
+# Literatur
+
+- Manderscheid, K., 2017. Sozialwissenschaftliche Datenanalyse mit R. Springer Fachmedien Wiesbaden, Wiesbaden. Kap. 11, S. 225-238. <https://doi.org/10.1007/978-3-658-15902-3>
+
+```{r, echo=F, eval=F}
+knitr::purl("gewichtung5.qmd")
+```

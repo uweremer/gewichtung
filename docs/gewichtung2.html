@@ -8,7 +8,7 @@
 
 <meta name="author" content="Dr.&nbsp;Uwe Remer">
 
-<title>Gewichtung in R - 2. Was hat Gewichtung mit Stichproben zu tun?</title>
+<title>Gewichtung in R - 2. Warum müssen wir gewichten?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,6 +60,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Gewichtung in R">
@@ -102,27 +104,27 @@ ul.task-list li input[type="checkbox"] {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-skript">    
         <li>
     <a class="dropdown-item" href="./gewichtung1.html" rel="" target="">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="dropdown-text">1. Was ist Gewichtung?</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./gewichtung2.html" rel="" target="">
- <span class="dropdown-text">2. Was hat Gewichtung mit Stichproben zu tun?</span></a>
+ <span class="dropdown-text">2. Warum müssen wir gewichten?</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./gewichtung3.html" rel="" target="">
- <span class="dropdown-text">3. Gewichtung in prominenten Surveys</span></a>
+ <span class="dropdown-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./gewichtung4.html" rel="" target="">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="dropdown-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./gewichtung5.html" rel="" target="">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="dropdown-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./gewichtung6.html" rel="" target="">
- <span class="dropdown-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="dropdown-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </li>  
     </ul>
   </li>
@@ -145,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gewichtung2.html">2. Was hat Gewichtung mit Stichproben zu tun?</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gewichtung2.html">2. Warum müssen wir gewichten?</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
@@ -173,37 +175,37 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="menu-text">1. Was ist Gewichtung?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gewichtung2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2. Was hat Gewichtung mit Stichproben zu tun?</span></a>
+ <span class="menu-text">2. Warum müssen wir gewichten?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gewichtung3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Gewichtung in prominenten Surveys</span></a>
+ <span class="menu-text">3. Wo finden wir Gewichte in bekannten Surveys?</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gewichtung4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="menu-text">4. Wie nutzen wir einfache Gewichte in R? Das <code>sjmisc</code> und das <code>weights</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gewichtung5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="menu-text">5. Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gewichtung6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Einstieg in die Gewichtung in R</span></a>
+ <span class="menu-text">6. Wie gewichten wir komplexe Stichproben in R?</span></a>
   </div>
 </li>
     </ul>
@@ -212,14 +214,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#designgewichte" id="toc-designgewichte" class="nav-link active" data-scroll-target="#designgewichte">Designgewichte</a></li>
+  <li><a href="#anpassungsgewichte" id="toc-anpassungsgewichte" class="nav-link" data-scroll-target="#anpassungsgewichte">Anpassungsgewichte</a></li>
+  <li><a href="#weiterführende-literatur" id="toc-weiterführende-literatur" class="nav-link" data-scroll-target="#weiterführende-literatur">Weiterführende Literatur:</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. Was hat Gewichtung mit Stichproben zu tun?</h1>
+<h1 class="title">2. Warum müssen wir gewichten?</h1>
 </div>
 
 
@@ -234,35 +244,181 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="gewichtung2_files/figure-html/ttest_besipiel-1.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Cohen's d |       95% CI
-------------------------
-0.41      | [0.34, 0.48]
+<p>Hallo und herzlich willkommen zum zweiten Teil der Videoserie zum Thema “Gewichtung mit R”. Nachdem wir in Teil eins gehört haben, was das Grundprinzip der Gewichtung ist, schauen wir in diesem zweiten Teil mal genauer auf das Warum. Das Video behandelt also die methodologischen Grundlagen.</p>
+<blockquote class="blockquote">
+<p>Warum müssen wir gewichten?</p>
+</blockquote>
+<p>Nun, die kurze Antwort lautet: Wir müssen gewichten, damit wir korrekte Ergebnisse erhalten. Und wenn wir es nicht tun, obwohl es notwendig wäre, könnten wir Ergebnisse erhalten, die inhaltlich daneben liegen oder wo wir die Genauigkeit falsch beurteilen.</p>
+<p>Statistisch ausgedrückt: wenn wir nicht gewichten, können Punktschätzer verzerrt sein und die Varianz - und damit die Standardfehler - können unterschätzt oder überschätzt werden. Wenn Standardfehler unterschätzt werden, werden Ergebnisse signifikant, die es eigentlich nicht sein sollten. Die Wahrscheinlichkeit für den Fehler erster Art (<span class="math inline">\(\alpha\)</span> - Fehler) steigt. Wenn Standardfehler überschätzt werden, steigt die Wahrscheinlichkeit für Fehler zweiter Art und eigentlich bedeutsame Zusammenhänge werden unter Umständen nicht erkannt.</p>
+<p>Aber holen wir ein wenig aus um zu verstehen, warum das so ist. Die längere Antwort geht folgendermaßen:</p>
+<p>Es gibt zwei Gründe, warum wir unsere Daten für die Auswertung gewichten müssen.</p>
+<ol type="1">
+<li>Wir wollen unterschiedliche Auswahlwahrscheinlichkeiten des Stichprobendesigns ausgleichen.</li>
+<li>Wir wollen Verzerrungen aus Stichprobenausfällen, also Nonresponse, ausgleichen.</li>
+</ol>
+<p>Diese beiden Gründe geben uns zwei Arten von Gewichten: Die Design-Gewichte und die Anpassungsgewichte.</p>
+<p>Hier werden aber eine ganze Reihe von verschiedenen Begriffen genutzt. Dabei gehören zu den Designgewichten:</p>
+<ul>
+<li>Designgewichte</li>
+<li>Stichprobengewichte</li>
+<li>Populationsgewichte</li>
+</ul>
+<p>Und zu den Anpassungsgewichten:</p>
+<ul>
+<li>Anpassungsgewichte</li>
+<li>Transformationsgewichte</li>
+<li>Nonresponse Gewichte</li>
+<li>Redressement Gewichte</li>
+<li>Poststratifizierungs Gewichte</li>
+<li>Kalibrierungsgewichte</li>
+</ul>
+<p>Am Ende des Videos, sollten Sie die verschiedenen Begriffe kennen und auseinanderhalten können.</p>
+<section id="designgewichte" class="level2">
+<h2 class="anchored" data-anchor-id="designgewichte">Designgewichte</h2>
+<p>In einer idealen Welt wo Aufwand, technische Hürden oder der Zugang zu Untersuchungseinheiten für Forschende keine Rolle spielen, würden Sie die Daten über die gesamte Grundgesamtheit sammeln und auswerten.</p>
+<p>In der Realität geht das nicht. Oft können wir nur einen Teil der Grundgesamtheit untersuchen. Deshalb wir ziehen wir Zufallsstichproben. Während einfache Zufallsstichproben kein Problem darstellen, müssen bei komplexen Zufallsstichproben Gewichte genutzt werden um das Strichprobendesign in den Daten auszugleichen. Diese Gewichte werden daher <strong>Designgewichte</strong> genannt. Zu diesen gehören auch Populationsgewichte oder Transformationsgewichte.</p>
+<p>In vielen Bereichen der Sozialwissenschaften insbesondere dort, wo mit umfragebasierten Individualdaten gearbeitet wird, ist es häufig nicht möglich oder zielführend, die gesamte Population oder Grundgesamtheit zu untersuchen - also eine Vollerhebung durchzuführen.</p>
+<p>Zum einen, müssen zuerst alle Elemente der Grundgesamtheit identifiziert werden können. Das ist nicht immer möglich: In Deutschland gibt es zum Beispiel kein nationales Einwohnerregister. Oder ein zentrales Register über alle Studierenden.</p>
+<p>Und selbst dann, wenn alle Elemente der Grundgesamtheit identifizierbar sind, kann es aus <em>forschungsökonomischen</em> Überlegungen sinnvoll sein, nur einen Teil der Grundgesamtheit zu untersuchen.</p>
+<p>Das ist zum Beispiel der Fall, wenn e zu teuer oder zu aufwändig wäre alle zu befragen, oder wenn eine Vollerhebung keinen Mehrwert in Bezug auf die zu erhebenden Informationen geben würde.</p>
+<p>Und das ist tatsächlich meistens der Fall. So können wir ja schon mit 1.000 oder 2.000 Fällen sehr gut (also unverzerrt und effizient) Schlussfolgerungen über die Grundgesamtheit von gut 83 Mio. Einwohnern in Deutschland treffen.</p>
+<p>Also: Wir nutzen in der Regel keine Vollerhebung sondern eine Stichprobe.</p>
+<p>Und hier kommt ein wichtiger Punkt: Wenn es sich um eine einfache Zufallsstichprobe handelt und alle Elemente der Grundgesamtheit die gleiche Auswahlwahrscheinlichkeit haben, dann hat das Stichprobendesign keine verzerrende Wirkung! Wir benötigen also kein Designgewicht.</p>
+<p>Wenn wir aber eine komplexes Stichprobendesign nutzen, dann liegen ungleiche Auswahlwahrscheinlichkeiten für die einzelnen Elemente der Grundgesamtheit vor. Durch die Gewichte können wir diese Unterschiede durch das Stichprobendesign ausgleichen, diese Art Gewichte werden daher <strong>Designgewichte</strong> genannt.</p>
+<p>Machen wir ein einfaches Beispiel für eine Bevölkerungsstichprobe in Deutschland und nehmen wir an es gäbe ein nationales Einwohnerregister.</p>
+<p>In Deutschland leben 2021 83.24 Mio. Menschen<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Davon leben knapp 70.7 Mio., also 85 Prozent in Westdeutschland inklusive Berlin und 12.47 Mio., also 15 Prozent in Ostdeutschland.</p>
+<p>Wir wollen für eine Stichprobe des Umfangs <span class="math inline">\(n=3.000\)</span> ziehen. Würden wir eine einfache Zufallsstichprobe ziehen, läge der Erwartungswert für den Anteil von Personen aus Westdeutschland bei 85 Prozent. 15 Prozent, also 450 Personen würden für Ostdeutschland gesampelt.</p>
+<p>Das Verhältnis entspräche dem in der Grundgesamtheit und alle Elemente der Grundgesamtheit hätten dieselbe Auswahlwahrscheinlichkeit von</p>
+<p><span class="math display">\[\frac{n}{N}=\frac{3.000}{83.237.124}=0.000036\]</span>.</p>
+<p>In diesem Fall ist also keine Gewichtung notwendig.</p>
+<p>Für manche Analysen wäre durch eine solche geringe Fallzahl die statistische Teststärke zu gering. Ebenso kann man erwarten, dass weniger häufig vorliegende Merkmalskombinationen bei nur 450 Personen gar nicht enthalten sind.</p>
+<p>Die Lösung ist, dass wir bewusst eine größere Stichprobe für Ostdeutschland ziehen. Von den 3.000 zu ziehenden Befragten sollen 1.000 aus Ostdeutschland kommen und 2.000 aus Westdeutschland.</p>
+<p>Aus der einfachen Zufallsstichprobe wird eine disproportional geschichtete Stichprobe. Das Stratifizierungsmerkmal ist der Landesteil. Und disproportional ist die Schichtung, weil wir mehr Befragte für Ost ziehen, das nennt man auch Oversampling.</p>
+<p>Die Folge dieses Oversamplings ist, dass wir für Ost und West unterschiedliche Auswahlwahrscheinlichkeiten haben:</p>
+<p><span class="math display">\[\frac{n_{Ost}}{N_{Ost}}=\frac{1.000}{83.237.124}=0.000012\]</span></p>
+<p>Und für West:</p>
+<p><span class="math display">\[\frac{n_{West}}{N_{West}}=\frac{2.000}{83.237.124}=0.000024\]</span></p>
+<p>Und genau hier kommen die Designgewichte ins Spiel. Die Designgewichte korrigieren diese unterschiedlichen Auswahlwahrscheinlichkeiten für die Auswertung: Da wir mehr Fälle in Ost haben, als es dem Verhältnis in der Grundgesamtheit entsprechen würde, sorgen die Gewichte dafür, dass Ostdeutsche mit geringerem Gewicht in die Analyse eingehen.</p>
+<p>Wir können sogar sehr einfach berechnen, um welchen Faktor Ostdeutsche weniger und Westdeutsche stärker berücksichtigt werden müssen:</p>
+<p><span class="math display">\[\frac{\frac{N_{Ost}}{N_{Ges}}}{\frac{n_{Ost}}{n_{Ges}}}=\frac{\frac{12.470.146}{83.237.124}}{\frac{1.000}{3.000}}=0.4494441\]</span></p>
+<p>Und für West:</p>
+<p><span class="math display">\[\frac{\frac{N_{West}}{N_{Ges}}}{\frac{n_{West}}{n_{Ges}}}=\frac{\frac{70.766.978}{83.237.124}}{\frac{2.000}{3.000}}=1.275278\]</span></p>
+<p>Im Datensatz unseres fiktiven Beispiels würden wir also eine Gewichtungsvariable erstellen. Alle Westdeutschen Befragten hätten den Wert 1.275278 und alle Ostdeutschen den Wert 0.4494441.</p>
+<p>Gewichten wir die 1.000 Befragten in Ost mit 0.4494441 erhalten wir <span class="math inline">\(1.000 \times 0.4494441 \approx 450\)</span>. Und in West <span class="math inline">\(2.000 \times 1.275278 \approx 2550\)</span>. Genau die Anzahl der Befragten, die wir bei einer einfachen Zufallsstichprobe ohne disproportionale Schichtung erwarten würden.</p>
+<p>Diese Art von Designgewicht nennt man auch manchmal Populationsgewicht, da es die Stichprobe bzw. genauer, die unterschiede in den Auswahlwahrscheinlichkeiten so anpasst, dass sie in ihrer Zusammensetzung der Population entspricht.</p>
+<p>Das Prinzip, dass wir eben kennengelernt haben lässt auch auf noch komplexere Stichprobendesigns anwenden, bei denen mehrstufige Verfahren zum Einsatz kommen, mehre Schichtungsmerkmale berücksichtigt werden, oder Klumpen- bzw. Clusterstichproben zum Einsatz kommen. Immer wird für die vorliegende Kombination und den betreffenden Cluster die Auswahlwahrscheinlichkeit berechnet.</p>
+<p>Neben den Designgewichten gibt es noch eine weitere Klasse an Gewichten, über die wir im Folgenden kurz sprechen werden: die Anpassungsgewichte.</p>
+</section>
+<section id="anpassungsgewichte" class="level2">
+<h2 class="anchored" data-anchor-id="anpassungsgewichte">Anpassungsgewichte</h2>
+<p>Selbst bei einer einfachen Zufallsstichprobe, bei der alle Auswahlwahrscheinlichkeiten gleich sind und keine Designgewicht notwendig ist, oder nach Ausgleich dieser Designunterschiede durch eben jene Designgewichte kann es sein, dass die <em>realisierte</em> Stichprobe trotzdem kein verkleinertes Abbild der Grundgesamtheit ist.</p>
+<p>Warum? Nun ja, es ist vollkommen normal, dass Untersuchungseinheiten nicht erfasst oder nicht erreicht werden können. Oder dass Befragte die Teilnahme verweigern. Dieser Ausfall wird in der Umfrageforschung als Unit-Nonresponse bezeichnet.</p>
+<p>Wenn dieser Ausfall systematisch mit bestimmten Merkmalen der Untersuchungseinheiten zusammenhängt - zum Beispiel mit Bildung Einkommen oder Interesse - ist die Stichprobe in Bezug auf diese Merkmale verzerrt, man könnte auch sagen: nicht repräsentativ.</p>
+<p>Hier ist der Hinweis wichtig, dass keine Stichprobe per se repräsentativ ist. Repräsentativität als vermeintliches Gütekriterium ist eine empirische Frage: Sie müssen prüfen, ob ihre realisierte Stichprobe tatsächlich repräsentativ ist. Und an der Stelle werden sie feststellen, dass sich Repräsentativität nur im Hinblick auf bestimmte, angebbare Merkmale prüfen lässt. Und das geht auch nur, wenn für diese Merkmale die Verteilung in der Grundgesamtheit bekannt ist.</p>
+<p>Ist die realisierte Stichprobe durch Nonresponse verzerrt, können <strong>Nonresponse-Gewichte</strong> oder sogenannte <strong>Anpassungsgewichte, Redressement-Gewichte oder Poststratifizierungs-Gewichte</strong> die Verzerrung etwas verringern.</p>
+<p>Bei Nonresponse-Gewichten stellt man sich Modellhaft eine zweiten Zufallsprozess nach der eigentlichen Stichprobenziehung vor: jede Einheit hat eine bestimmte Wahrscheinlichkeit dafür, an der Befragung teilzunehmen.</p>
+<p>Wir haben also eine Auswahlwahrscheinlichkeit und ein Antwort- oder Teilnahmewahrscheinlichkeit.</p>
+<p>Liegen nun unterschiedliche Teilnahmewahrscheinlichkeiten vor, so verzerren auch diese die Schätzung in den statistischen Analysen. Ein simples Beispiel war in Video eins, das Fehlen eines Teils der männlichen Schüler. Leicht kann man sich auch Beispiele aus der sozialwissenschaftlichen Umfragepraxis vorstellen, wie etwa das die Teilnahmebereitschaft vom politischen Interesse abhängt, oder vielleicht wie viel Zeit Menschen haben.</p>
+<p>Kennt man diese Teilnahmewahrscheinlichkeiten, lassen sich Gewichte berechnen, die diese Verzerrung ausgleichen.</p>
+<p>Das Problem dabei ist, dass man nur sehr wenige Informationen über die Individuen hat, die zwar gesampelt wurden, die jedoch nicht teilnehmen.</p>
+<p>Oft ist das einzige was man hat, das Geschlecht, das Alter und die Adresse (bei Einwohnermeldestichproben) oder ein gröberer Wohnort über die Vorwahl der Telefonnummer (wenn es eine Festnetz-Telefonstichprobe ist).</p>
+<p>Die Teilnahmewahrscheinlichkeiten sind also nur relativ grob bestimmbar. Trotzdem kann man wieder ihren Kehrwert nutzen, um ein entsprechendes Gewicht für die verschiedenen Individuen zu berechnen. Personen aus Nachbarschaften mit geringer Antwortwahrscheinlichkeit erhalten so ein etwas höheres Gewicht, als Personen aus Nachbarschaften in denen die Teilnahmebereitschaft höher liegt.</p>
+<p>Doch auch nach Gewichtung der Daten mit solchen Nonresponse-Gewichten, stellt die realisierte Stichprobe in der Regel kein verkleinertes Abbild der Grundgesamtheit dar. Das heißt die Verteilung bestimmter Merkmale in den Daten entspricht nicht der Verteilung dieser Merkmale in der Grundgesamtheit. Für viele Merkmale lässt sich das nicht feststellen, da über sie keine Informationen zu ihrer Verteilung in der Grundgesamtheit vorliegen (z.B. zu Einstellungen oder Verhaltensweisen).</p>
+<p>Aber wo es eine amtliche Statistik gibt, oder Daten durch die Fortschreibung des Zensus und Mikrozensus vorliegen, kann man die Verteilung erhobener Merkmale aus der realisierten Stichprobe - kurz aus den Daten - mit diesen objektiven Daten vergleichen.</p>
+<p>Und noch mehr, wenn wir also wissen, um wie viel in unseren Daten bestimmte Merkmale mehr oder weniger häufig vorliegen, können wir durch Gewichtung die Verteilung der Randverteilung in der Grundgesamtheit anpassen.</p>
+<p>Ein Beispiel:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>In dieser Tabelle sehen wir die Verteilung verschiedener Altersgruppen aus der ungewichteten Stichprobe, als Anteil in Prozent.</p>
+<p>Die Spalte GG enthält den Anteil, den diese Altersgruppe in der Grundgesamtheit hat auf Basis der Daten des statistischen Bundesamtes.</p>
+<p>Wir sehen, dass manche Altersgruppen in der Stichprobe überrepräsentiert sind. Sie also im Schnitt häufiger geantwortet haben, als andere Altersgruppen.</p>
+<p>Jetzt können wir berechnen wie hoch der Faktor ist, um den eine Gruppe über- oder unterrepräsentiert ist, indem wir das Verhältnis von Stichprobe zu Grundgesamtheit berechnen. Das sehen wir in der vierten Spalte.</p>
+<p>Jetzt können wir durch den Kehrwert das Gewicht berechnen, mit dem die Befragten aus der jeweiligen Altersgruppe gewichtet werden müssen: Überrepräsentierte Gruppen werden also runtergwichtet, und unterrepräsentiete Gruppen hochgewichtet.</p>
+<p>Wenn diese Gewichte angewendet wurden, erhalten wir in der Geiwchteten Stichprobe die Randverteililung in den Daten, die auch in der Grundgesamtheit vorliegt. Das sehen wir in der letzten Spalte.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Alter</th>
+<th>SP</th>
+<th>GG</th>
+<th>SP/GG</th>
+<th>1/(SP/GG)</th>
+<th>Gewichtete SP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>15-20</td>
+<td>6,6</td>
+<td>5,5</td>
+<td>1,2</td>
+<td>0,83333333</td>
+<td>5,5</td>
+</tr>
+<tr class="even">
+<td>21-40</td>
+<td>27,3</td>
+<td>28,5</td>
+<td>0,95789474</td>
+<td>1,04395604</td>
+<td>28,5</td>
+</tr>
+<tr class="odd">
+<td>41-60</td>
+<td>32,5</td>
+<td>31,8</td>
+<td>1,02201258</td>
+<td>0,97846154</td>
+<td>31,8</td>
+</tr>
+<tr class="even">
+<td>61-80</td>
+<td>28,1</td>
+<td>25,8</td>
+<td>1,08914729</td>
+<td>0,91814947</td>
+<td>25,8</td>
+</tr>
+<tr class="odd">
+<td>81 und mehr</td>
+<td>5,5</td>
+<td>8,4</td>
+<td>0,6547619</td>
+<td>1,52727273</td>
+<td>8,4</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>100</td>
+<td>100</td>
+<td>1</td>
+<td>1</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>Für die Berechnung der Anpassungsgewichte muss zuerst die Verteilung der Daten bekannt sein, sie kann also erst <em>nach</em>, also <em>post</em>, der Stichprobenziehung und Erhebung erfolgen. Außerdem gleicht dies Gewichtung die Daten an die Verteilung gesellschaftlicher prägender Schichtungsmerkmale wie Bildung, Alter und Geschlecht an. Daher nennt man diese Art von Gewichten auch Poststratifikations-Gewichten. Manchmal nennt man sie auch Kalibrierungsgewichte oder Redressment-Gewichte.</p>
+<p>Auch Transformationsgewichte gehören zu den Anpassungsgewichten. Transformationsgewichte erlauben es, die Stichprobe so zu gewichten, dass mit ihre auch Aussagen auf einer anderen Analyseebene möglich ist. So kann man Daten aus einer Individual-Stichprobe mit Hilfe des Transformationsgewichts als Haushaltsstichprobe nutzen. Oder Daten aus Haushaltsstichproben für Analysen auf Individualebene nutzen. Um diese Gewichte berechnen zu können, werden in der Befragung Informationen über die Haushaltsgröße und Altersstruktur erhoben. Damit kann dann die Auswahrscheinlichkeit für die jeweiligen Haushaltsgrößen bestimmt werden und an die Randverteilungen aus der Bevölkerungsstatistik angepasst werden. Da dies erst nach der Stichprobenziehung erfolgen kann, handelt es sich also um ein Anpassungsgewicht.</p>
+<p>Fassen wir also noch einmal zusammen. Wenn Daten aus komplexen Stichproben stammen - und das tun in der Regel alle Daten aus großen Umfragen - dann liegen aufgrund des Stichprobendesigns ungleiche Auswahlwahlwahrscheinlichkeiten vor. Nonresponse sorgt zusätzlich für ungleiche Teilnahmewahrscheinlichkeiten. Schätzungen auf Basis von ungewichteten Daten können dann verzerrt sein, man liegt also inhaltlich daneben. Außerdem können die Standardfehler fehlerbehaftet sein. Gewichten wir die Daten mit Designgewichten können wir ungleiche Auswahlwahrscheinlichkeiten ausgleichen und durch Anpassungsgewichte Nonresponse Verzerrungen in den Randverteilungen abmildern.</p>
+<p>Im nächsten Teil werden wir uns anschauen, wie bei der Gewichtung von zwei bekannten Umfrageprogramme, der Allbus und der European Social Survey vorzugehen ist.</p>
+</section>
+<section id="weiterführende-literatur" class="level2">
+<h2 class="anchored" data-anchor-id="weiterführende-literatur">Weiterführende Literatur:</h2>
+<ul>
+<li>Aneshensel, C.S., 2013. Theory-Based Data Analysis for the Social Sciences. SAGE, Thousand Oaks, S. 167–196.</li>
+<li>Schnell, R., 2019. Nonresponse, in: Survey-Interviews, Studienskripten zur Soziologie. Springer Fachmedien Wiesbaden, Wiesbaden, pp.&nbsp;145–174. <a href="https://doi.org/10.1007/978-3-531-19901-6_7" class="uri">https://doi.org/10.1007/978-3-531-19901-6_7</a></li>
+<li>Kiesl, H., 2014. Gewichtung, in: Baur, N., Blasius, J. (Eds.), Handbuch Methoden der empirischen Sozialforschung. Springer Fachmedien Wiesbaden, Wiesbaden, pp.&nbsp;349–356. <a href="https://doi.org/10.1007/978-3-531-18939-0_24" class="uri">https://doi.org/10.1007/978-3-531-18939-0_24</a></li>
+</ul>
 
-- Estimated using pooled SD.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-West  Ost 
-2334 1189 </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4710874</code></pre>
-</div>
-</div>
-<p>Hallo 0.4139245, 0.95, 0.3433963, 0.484395</p>
+
+</section>
 
 
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Fußnoten</h2>
 
-</main> <!-- /main -->
+<ol>
+<li id="fn1"><p>83.237124, siehe https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Bevoelkerungsstand/Tabellen/liste-gebietstand.html#249750<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Bevoelkerungsstand/Tabellen/bevoelkerung-altersgruppen-deutschland.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

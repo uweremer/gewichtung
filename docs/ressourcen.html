@@ -8,7 +8,7 @@
 
 <meta name="author" content="Dr.&nbsp;Uwe Remer">
 
-<title>Gewichtung in R - 1. Was ist Gewichtung?</title>
+<title>Gewichtung in R - Ressourcen</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,8 +60,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Gewichtung in R">
@@ -129,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./ressourcen.qmd" rel="" target="">
+    <a class="nav-link active" href="./ressourcen.html" rel="" target="" aria-current="page">
  <span class="menu-text">Ressourcen</span></a>
   </li>  
   <li class="nav-item">
@@ -147,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gewichtung1.html">1. Was ist Gewichtung?</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Ressourcen</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Suchen" onclick="window.quartoOpenSearch();">
@@ -174,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./gewichtung1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1. Was ist Gewichtung?</span></a>
   </div>
 </li>
@@ -218,13 +216,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Auf dieser Seite</h2>
    
   <ul>
-  <li><a href="#zielgruppen-und-voraussetzungen" id="toc-zielgruppen-und-voraussetzungen" class="nav-link active" data-scroll-target="#zielgruppen-und-voraussetzungen">Zielgruppen und Voraussetzungen</a></li>
-  <li><a href="#lernziele-und-ablauf" id="toc-lernziele-und-ablauf" class="nav-link" data-scroll-target="#lernziele-und-ablauf">Lernziele und Ablauf</a></li>
-  <li><a href="#was-ist-gewichtung" id="toc-was-ist-gewichtung" class="nav-link" data-scroll-target="#was-ist-gewichtung">Was ist Gewichtung?</a>
-  <ul class="collapse">
-  <li><a href="#beispiel-schulklasse" id="toc-beispiel-schulklasse" class="nav-link" data-scroll-target="#beispiel-schulklasse">Beispiel Schulklasse</a></li>
-  </ul></li>
-  <li><a href="#literatur" id="toc-literatur" class="nav-link" data-scroll-target="#literatur">Literatur</a></li>
+  <li><a href="#rscript-dateien" id="toc-rscript-dateien" class="nav-link active" data-scroll-target="#rscript-dateien">RScript Dateien</a></li>
   </ul>
 </nav>
     </div>
@@ -233,7 +225,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">1. Was ist Gewichtung?</h1>
+<h1 class="title">Ressourcen</h1>
 </div>
 
 
@@ -248,76 +240,13 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Hallo und herzlich willkommen zur Videoserie “Gewichtung mit R”.</p>
-<p>Vielleicht ist ihnen in wissenschaftlichen Arbeiten unter Tabellen oder Grafiken folgender Satz so, oder ähnlich schon aufgefallen: “<em>Daten gewichtet nach Designgewicht</em>”</p>
-<p>Vielleicht sind sie in den Codebüchern und Methodenberichten sozialwissenschaftlicher Datensätzen, wie dem <a href="https://www.gesis.org/allbus/allbus">Allbus</a> oder dem <a href="https://www.europeansocialsurvey.org/">European Social Survey</a>, schon mal über Gewichtungsvariablen, wie <code>pweight</code> oder <code>dweight</code> gestolpert.</p>
-<p>Vielleicht haben sie aber auch einfach nur den Hinweis zu einer Auswertung bekommen, dass Sie ihre Daten gewichten müssen und sie fragen sich nun, wie das geht.</p>
-<p>In dieser Videoserie wollen wir klären, was es mit dieser Gewichtung auf sich hat, und wie man sie in R technisch umsetzt.</p>
-<section id="zielgruppen-und-voraussetzungen" class="level2">
-<h2 class="anchored" data-anchor-id="zielgruppen-und-voraussetzungen">Zielgruppen und Voraussetzungen</h2>
-<p>Zielgruppe dieser Videoserie sind Bachelor- oder Master-Studierende der Sozialwissenschaften, aber auch anderer Disziplinen, die mit Umfragedaten oder generell mit stichprobenbasierten Daten arbeiten. Darüber hinaus auch alle diejenigen, welche von anderen Statistikprogrammen zu R wechseln und Gewichten wollen oder müssen.</p>
-<p>Damit Sie den Inhalten folgen können, sollten Sie über Grundlagen in sozialwissenschaftlichen Methoden wie Datenerhebung und Stichprobenziehung verfügen. Außerdem sollten Sie Kenntnisse in Statistik haben, also wissen, was Mittelwerte und Streuungsmaße sind; und vielleicht schon wissen, was eine lineare Regression ist. Darüber hinaus werden Grundlagen in R vorausgesetzt, dass heißt, sie sollten wissen, wie Datensätze aufgebaut sind, wie sie Datensätze importieren und wie sie mit Daten, Variablen und Objekten arbeiten.</p>
-<p>Zum Einstieg in das Thema Gewichtung ist es sinnvoll, einen der am Ende des Videos angegebenen Grundlagetexte zu lesen.</p>
-</section>
-<section id="lernziele-und-ablauf" class="level2">
-<h2 class="anchored" data-anchor-id="lernziele-und-ablauf">Lernziele und Ablauf</h2>
-<p>Diese Videoserie besteht aus sechs aufeinander aufbauenden Teilen. Die Überschriften beinhalten auch gleich das Lernziel des jeweiligen Videos. Am Ende sollen Sie Antworten auf die folgenden Fragen geben können:</p>
+<section id="rscript-dateien" class="level1">
+<h1>RScript Dateien</h1>
 <ul>
-<li>Teil 1: Was ist Gewichtung?</li>
-<li>Teil 2: Warum gewichten wir?</li>
-<li>Teil 3: Wo finden wir Gewichte in bekannten Surveys?</li>
-<li>Teil 4: Wie nutzen wir einfache Gewichte R? Das <code>sjmisc</code> und <code>weights</code> Paket</li>
-<li>Teil 5: Wie nutzen wir einfache Gewichte in R? Das <code>survey</code> Paket</li>
-<li>Teil 6: Wie gewichten wir komplexe Stichproben in R?</li>
-</ul>
-<p>Zu allen Videos gibt es auf dieser Seite den R Code sowie das Skript. Am Ende der Videos gibt es Empfehlungen zu weiterführender Literatur.</p>
-<p>Starten wir nun inhaltlich. Die erste Frage, die wir klären wollen, lautet:</p>
-</section>
-<section id="was-ist-gewichtung" class="level1">
-<h1>Was ist Gewichtung?</h1>
-<p>Gewichtung ist notwendig, wenn die Datenerhebung auf komplexen Stichproben basiert, also keine einfache Zufallsstichprobe, sondern die Stichprobenziehung mehre Stufen oder Schichten umfasst, und somit zu ungleichen Auswahlwahrscheinlichkeiten führt.</p>
-<p>Gewichtung ist außerdem eine Möglichkeit um Verzerrungen aus Nonresponse zu verringern, also wenn ungleiche Teilnahmewahrscheinlichkeiten vorliegen.</p>
-<p>Das Grundprinzip der Gewichtung ist also, dass unterschiedliche Auswahlwahrscheinlichkeiten oder Teilnahmewahrscheinlichkeiten so ausgeglichen werden, dass statistische Kennzahlen davon nicht mehr oder zumindest nicht mehr so sehr beeinflusst werden.</p>
-<p>Ganz konkret ist Gewichtung ist der Vorgang, durch den die Beobachtungen in Datensätzen mit einem unterschiedlich großen Gewichtungsfaktor in eine statistische Analyse mit aufgenommen werden. Unterschiedliche Beobachtungen haben dadurch einen unterschiedlich großen Einfluss auf das Ergebnis des statistischen Verfahrens.</p>
-<section id="beispiel-schulklasse" class="level2">
-<h2 class="anchored" data-anchor-id="beispiel-schulklasse">Beispiel Schulklasse</h2>
-<p>Machen wir ein einfaches Beispiel: Es ist jetzt nicht sonderlich sozialwissenschaftlich, dafür sehr intuitiv:</p>
-<p>Sie haben eine Schulklasse mit 10 Mädchen und 10 Jungen.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="./Grafiken/Folie1.PNG" class="img-fluid figure-img"></p>
-</figure>
-</div>
-<p>Sie wollen das arithmetische Mittel der Körpergröße für die ganze Klasse berechnen. Am Tag der Messung sind aber nicht alle Kinder da, 5 der Jungen fehlen.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="./Grafiken/Folie2.PNG" class="img-fluid figure-img"></p>
-</figure>
-</div>
-<p>Wie könnten Sie trotzdem zu einer guten Schätzung für die Durchschnittsgröße der ganzen Klasse gelangen?</p>
-<p>Richtig, bei der Berechnung des arithmetischen Mittels können wir jeden der gemessenen Jungen doppelt zählen. Wir gewichten sie also mit dem Faktor 2.</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="./Grafiken/Folie3.PNG" class="img-fluid figure-img"></p>
-</figure>
-</div>
-<p>Hier im Beispiel ist der wahre Mittelwert bei 170,15 cm. Auf Basis der <em>anwesenden</em> Schulkinder hätten wir eine Durchschnittsgröße von 169,2 cm geschätzt - also eine Abweichung von fast einem Zentimeter. Mit dem <em>gewichteten</em> Mittelwert kommen wir auf 170,35 cm. Das ist zwar leicht zu hoch, aber die Abweichung ist nur noch minimal.</p>
-<p>Das Beispiel hat intuitiv funktioniert, weil wir alle implizit die Annahme hatten, dass Körpergröße mit Geschlecht zusammenhängt. Außerdem war eine weitere implizite Annahme, dass die anwesenden Jungen repräsentativ für alle Jungen hinsichtlich der Größe sind.</p>
-<p>Hätten wir nicht gewichtet, hätten wir einen deutlich stärker verzerrten Wert für das arithmetische Mittel der Schulklasse geschätzt.</p>
-<p>Und ebenso ist es, wenn wir zum Beispiel auf Basis von Bevölkerungsumfragen Merkmale schätzen. Sobald ein Merkmal mit der Teilnahmewahrscheinlichkeit zusammenhängt, sind unsere Ergebnisse verzerrt. Aber unter bestimmten Bedingungen, kann eine Gewichtung der Daten die Verzerrung abmildern.</p>
-<p>Unterschiedliche Beobachtungen haben also durch Gewichtung einen unterschiedlich großen Einfluss auf das Ergebnis des statistischen Verfahrens.</p>
-<p>Wie schon gesagt, ist das Ausgleichen von Nonresponse ist nur ein Grund, warum Daten gewichtet werden müssen. Auch unterschiedliche Auswahlwahrscheinlichkeiten bei komplexen Stichproben können die Ergebnisse in dieser Form beeinflussen. Hier erhalten unterschiedliche Elemente der Grundgesamtheit bewusst unterschiedliche Wahrscheinlichkeiten, in die Stichprobe zu gelangen, Durch die Gewichtung werden dann diese Designeffekte der komplexen Stichproben ausgeglichen.</p>
-<p>In Teil zwei werden wir uns das genauer anschauen, wann und warum Gewichtung notwendig ist und welche was es mit den zwei Grundsätzlichen Arten der Gewichtung, den Designgewichten und den Anpassungsgewichten auf sich hat.</p>
-<p>Gewichte können theoretisch Werte von gegen 0 bis <span class="math inline">\(+\infty\)</span> annehmen. Ein Wert von 1 bedeutet, eine Beobachtung zählt einfach - also so viel, wie eine Beobachtung. Ein Gewicht von 2 bedeutet, diese Beobachtung zählt doppelt so viel wie eine Beobachtung. Und ein Wert von 0.5 heißt, diese Beobachtung wird nur mit halber Gewichtung in die Analyse einbezogen.</p>
-<p>Diese Gewichtungsfaktoren - oder einfach Gewichte - sind in der Regel als Variablen im Datensatz enthalten, in den sogenannten Gewichtungsvariablen. Welche das in bekannten sozialwissenschaftlichen Umfragen sind, wo wir sie finden und wie diese zu nutzen sind, darum wird es im dritten Teil gehen.</p>
-<p>In Teil vier werden wir dann Funktionen aus dem <code>weights</code> Paket und dem <code>sjmisc</code> Paket nutzen, mit denen deskriptive Analysen zunächst einfach gewichtet werden können. In Teil fünf werden wir dann das <code>survey</code> Paketes kennenlernen, das eine Vielzahl an Funktionen für die Auswertung gewichteter Daten enthält. Zuerst schauen wir uns in Grundlegende Funktionsweise an und in Teil 6 werden wir sehen, wie wir mit dem <code>survey</code> Paket Daten aus komplexen Stichproben für inferenzstatistische Verfahren gewichten.</p>
-</section>
-</section>
-<section id="literatur" class="level1">
-<h1>Literatur</h1>
-<ul>
-<li>Manderscheid, K., 2017. Sozialwissenschaftliche Datenanalyse mit R. Springer Fachmedien Wiesbaden, Wiesbaden. Kap. 11, S. 225-238. <a href="https://doi.org/10.1007/978-3-658-15902-3" class="uri">https://doi.org/10.1007/978-3-658-15902-3</a></li>
-<li>Gabler, S., Ganninger, M., 2010. Gewichtung, in: Wolf, C., Best, H. (Hrsg..), Handbuch der sozialwissenschaftlichen Datenanalyse. VS Verlag für Sozialwissenschaften, Wiesbaden, S. 143–164. <a href="https://doi.org/10.1007/978-3-531-92038-2_7" class="uri">https://doi.org/10.1007/978-3-531-92038-2_7</a></li>
+<li><a href="./Ressourcen/gewichtung3.R" download=""><i class="bi bi-file-earmark-code"></i> gewichtung3.R</a></li>
+<li><a href="./Ressourcen/gewichtung4.R" download=""><i class="bi bi-file-earmark-code"></i> gewichtung4.R</a></li>
+<li><a href="./Ressourcen/gewichtung5.R" download=""><i class="bi bi-file-earmark-code"></i> gewichtung5.R</a></li>
+<li><a href="./Ressourcen/gewichtung6.R" download=""><i class="bi bi-file-earmark-code"></i> gewichtung6.R</a></li>
 </ul>
 
 
